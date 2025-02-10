@@ -46,8 +46,7 @@
 }
 
 .banner-message {
-  position: absolute;
-  top: 1px;
+  position: absolute center;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1rem;
