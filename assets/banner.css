@@ -1,8 +1,7 @@
-/* Global Styles */
+/* General Styles */
 .banner-section {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #ffffff;
+  width: 100%;
+  font-family: "Helvetica", sans-serif;
 }
 
 /* Header */
@@ -10,22 +9,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  font-family: "Helvetica", sans-serif; /* Match font */
+  background: white;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .shop-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000;
+  color: black;
+  font-size: 18px;
+}
+
+.choose-gift-header {
+  text-align: right;
 }
 
 .choose-gift-button {
   background: #FFD700;
-  color: #000;
+  color: black;
   padding: 8px 15px;
   font-size: 14px;
   font-weight: bold;
@@ -37,46 +38,62 @@
 }
 
 .choose-gift-button:hover {
- background: #E6C200; /* Slightly darker on hover */
+  background: #E6C200;
 }
 
 /* Banner */
 .banner-container {
-  width: 100%;
-  background: #F5F5F5; /* Light gray background to match */
-  padding: 10px 0;
-}
-.shop-name {
-font-size: 20px;
-  font-weight: bold;
-  color: #000;
-  margin-right: 20px;
+  background-size: cover;
+  background-position: center;
+  padding: 60px 20px;
+  text-align: left;
+  position: relative;
 }
 
+/* Banner Message (Find the ideal gift for your loved ones.) */
 .banner-message {
-font-size: 14px;
-  color: #000;
-  text-align: center;
-  flex-grow: 1;
-  white-space: nowrap;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: normal;
+  color: black;
 }
 
+/* Main Title and Text */
 .text-overlay {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  display: inline-block;
-  border-radius: 10px;
+  max-width: 600px;
+  margin-left: 50px;
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 40px;
   font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 16px;
+  color: black;
+  margin-bottom: 10px;
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 14px;
+  color: black;
+  margin-bottom: 20px;
+}
+
+/* Button in Banner */
+.text-overlay .choose-gift-button {
+  display: inline-block;
+  background: #FFD700;
+  color: black;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
 }
