@@ -46,15 +46,9 @@
 }
 
 .banner-message {
-  position: absolute;
-  top:-20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1rem;
-  color: #000;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 5px 10px;
-  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  color: #333;
 }
 
 .text-overlay {
