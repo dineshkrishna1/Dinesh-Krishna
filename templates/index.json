@@ -11,7 +11,16 @@
   "sections": {
     "banner": {
       "type": "banner",
-      "settings": {}
+      "settings": {
+        "shop_name": "TISSO VISON",
+        "banner_message": "Find the ideal gift for your loved ones.",
+        "main_title": "The Gift Guide",
+        "subtitle": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+        "description": "Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "button_text": "CHOOSE GIFT →",
+        "button_link": "",
+        "banner_image": "shopify://shop_images/Group_1000007949_4251390f-bdea-46d6-a890-1bdb184fb9de.jpg"
+      }
     }
   },
   "order": [
