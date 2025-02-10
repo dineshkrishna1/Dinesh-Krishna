@@ -10,9 +10,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-family: "Helvetica", sans-serif; /* Match font */
 }
 
 .shop-name {
@@ -22,41 +24,41 @@
 }
 
 .choose-gift-button {
-  text-decoration: none;
-  background-color: #ffcc00;
+  background: #FFD700;
   color: #000;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
   font-weight: bold;
+  text-decoration: none;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
 .choose-gift-button:hover {
-  background-color: #e6b800;
+ background: #E6C200; /* Slightly darker on hover */
 }
 
 /* Banner */
 .banner-container {
-  background-size: cover;
-  background-position: center;
-  padding: 100px 20px;
-  color: #000;
-  position: relative;
+  width: 100%;
+  background: #F5F5F5; /* Light gray background to match */
+  padding: 10px 0;
 }
 .shop-name {
-  font-size: 20px;
+font-size: 20px;
   font-weight: bold;
   color: #000;
-  margin-right: 20px; /* Add spacing after shop name */
+  margin-right: 20px;
 }
 
 .banner-message {
-  font-size: 18px;
-  color: #333;
+font-size: 14px;
+  color: #000;
+  text-align: center;
   flex-grow: 1;
-  text-align: left; /* Aligns text properly */
-  white-space: nowrap; /* Prevents text from wrapping */
+  white-space: nowrap;
 }
 
 .text-overlay {
