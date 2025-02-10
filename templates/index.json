@@ -11,9 +11,7 @@
   "sections": {
     "banner": {
       "type": "banner",
-      "custom_css": [
-        "banner-message{margin-bottom: 220px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "shop_name": "TISSO VISON",
         "banner_message": "Find the ideal gift for your loved ones.",
