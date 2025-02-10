@@ -1,0 +1,78 @@
+/* Global Styles */
+.banner-section {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+/* Header */
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.shop-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.choose-gift-button {
+  text-decoration: none;
+  background-color: #ffcc00;
+  color: #000;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+}
+
+.choose-gift-button:hover {
+  background-color: #e6b800;
+}
+
+/* Banner */
+.banner-container {
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+  color: #000;
+  position: relative;
+}
+
+.banner-message {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: #000;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.text-overlay {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+}
+
+.description {
+  font-size: 1rem;
+}
