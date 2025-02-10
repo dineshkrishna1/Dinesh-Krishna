@@ -44,12 +44,19 @@
   color: #000;
   position: relative;
 }
+.shop-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin-right: 20px; /* Add spacing after shop name */
+}
 
 .banner-message {
   font-size: 18px;
-  text-align: center;
   color: #333;
-  flex: 2;
+  flex-grow: 1;
+  text-align: left; /* Aligns text properly */
+  white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .text-overlay {
