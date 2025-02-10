@@ -53,13 +53,10 @@
 
 /* Banner Message (Find the ideal gift for your loved ones.) */
 .banner-message {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 14px;
   font-weight: normal;
   color: black;
+  margin-right: 20px;
 }
 
 /* Main Title and Text */
