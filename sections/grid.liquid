@@ -74,3 +74,16 @@
     border-radius: 5px;
   }
 </style>
+<section class="custom-grid">
+  <h2>{{ section.settings.title }}</h2>
+  <div class="grid-container">
+    {% for item in section.settings.grid_items %}
+      <div class="grid-item">
+        <img src="{{ item.image | file_url }}" alt="{{ item.title }}">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.price }}</p>
+        <a href="{{ item.link }}">View Product</a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
