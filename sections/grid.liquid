@@ -1,92 +1,50 @@
-{% schema %}
-{
-  "name": "Custom Grid",
-  "settings": [],
-  "blocks": [
-    {
-      "type": "image",
-      "name": "Grid Item",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Product Title",
-          "default": "Product Name"
-        },
-        {
-          "type": "textarea",
-          "id": "description",
-          "label": "Product Description",
-          "default": "Short product description."
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Custom Grid",
-      "category": "Custom"
-    }
-  ]
-}
-{% endschema %}
+<div id="custom-grid"></div>
 
-<div class="custom-grid">
-  {% for block in section.blocks %}
-    <div class="grid-item" data-title="{{ block.settings.title }}" data-desc="{{ block.settings.description }}" data-image="{{ block.settings.image | img_url: 'large' }}">
-      {% if block.settings.image %}
-        <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.title }}">
-      {% else %}
-        <div class="placeholder">Upload an Image</div>
-      {% endif %}
-    </div>
-  {% endfor %}
-</div>
-
-<!-- Popup -->
-<div id="popup" class="popup">
-  <div class="popup-content">
-    <span class="close-btn">&times;</span>
-    <img id="popup-img" src="" alt="Popup Image">
-    <h2 id="popup-title"></h2>
-    <p id="popup-desc"></p>
-    <button class="add-to-cart">Add to Cart →</button>
-  </div>
-</div>
+<script src="{{ 'grid.js' | asset_url }}" defer></script>
 
 <style>
-  .custom-grid {
+  .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    padding: 20px;
+    margin-top: 20px;
   }
-
+  
   .grid-item {
+    text-align: center;
     position: relative;
-    cursor: pointer;
   }
 
-  .grid-item img {
+  .image-container {
+    position: relative;
+  }
+
+  .image-container img {
     width: 100%;
-    height: auto;
-    display: block;
     border-radius: 10px;
   }
 
-  .popup {
-    display: none;
+  .quick-view {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -94,66 +52,25 @@
   .popup-content {
     background: white;
     padding: 20px;
-    width: 300px;
     text-align: center;
     border-radius: 10px;
-    position: relative;
   }
 
-  .popup img {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  .close-btn {
+  .close-popup {
     position: absolute;
     top: 10px;
-    right: 15px;
-    cursor: pointer;
+    right: 10px;
     font-size: 24px;
+    cursor: pointer;
   }
 
   .add-to-cart {
     background: black;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
     margin-top: 10px;
     cursor: pointer;
+    border-radius: 5px;
   }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const gridItems = document.querySelectorAll(".grid-item");
-    const popup = document.getElementById("popup");
-    const popupImg = document.getElementById("popup-img");
-    const popupTitle = document.getElementById("popup-title");
-    const popupDesc = document.getElementById("popup-desc");
-    const closeBtn = document.querySelector(".close-btn");
-
-    gridItems.forEach(item => {
-      item.addEventListener("click", function() {
-        const imgSrc = this.getAttribute("data-image");
-        const title = this.getAttribute("data-title");
-        const desc = this.getAttribute("data-desc");
-
-        popupImg.src = imgSrc;
-        popupTitle.innerText = title;
-        popupDesc.innerText = desc;
-
-        popup.style.display = "flex";
-      });
-    });
-
-    closeBtn.addEventListener("click", function() {
-      popup.style.display = "none";
-    });
-
-    popup.addEventListener("click", function(e) {
-      if (e.target === popup) {
-        popup.style.display = "none";
-      }
-    });
-  });
-</script>
