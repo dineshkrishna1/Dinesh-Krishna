@@ -1,68 +1,159 @@
-<section class="custom-grid-section">
-  <h2 class="grid-title">Tisso Vision in the Wild</h2>
-  <div class="grid-container">
-    {% for product in collections['all'].products limit:6 %}
-      <div class="grid-item">
-        <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
-        <button class="quick-view-btn" data-product-id="{{ product.id }}">+</button>
-      </div>
-    {% endfor %}
-  </div>
+{% schema %}
+{
+  "name": "Custom Grid",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Grid Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Product Name"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Product Description",
+          "default": "Short product description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
 
-  <div id="quick-view-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <div class="modal-body"></div>
+<div class="custom-grid">
+  {% for block in section.blocks %}
+    <div class="grid-item" data-title="{{ block.settings.title }}" data-desc="{{ block.settings.description }}" data-image="{{ block.settings.image | img_url: 'large' }}">
+      {% if block.settings.image %}
+        <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.title }}">
+      {% else %}
+        <div class="placeholder">Upload an Image</div>
+      {% endif %}
     </div>
+  {% endfor %}
+</div>
+
+<!-- Popup -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close-btn">&times;</span>
+    <img id="popup-img" src="" alt="Popup Image">
+    <h2 id="popup-title"></h2>
+    <p id="popup-desc"></p>
+    <button class="add-to-cart">Add to Cart →</button>
   </div>
-</section>
+</div>
 
 <style>
-  .custom-grid-section { text-align: center; padding: 20px; }
-  .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .grid-item { position: relative; cursor: pointer; }
-  .grid-item img { width: 100%; border-radius: 5px; }
-  .quick-view-btn { position: absolute; top: 10px; right: 10px; background: black; color: white; border: none; cursor: pointer; }
-  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-  .modal-content { background: white; padding: 20px; position: relative; top: 50%; transform: translateY(-50%); width: 300px; margin: auto; border-radius: 5px; }
-  .close-modal { position: absolute; top: 10px; right: 10px; cursor: pointer; }
+  .custom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .grid-item {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-content {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  .popup img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .add-to-cart {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const buttons = document.querySelectorAll(".quick-view-btn");
-    const modal = document.getElementById("quick-view-modal");
-    const modalBody = document.querySelector(".modal-body");
-    const closeModal = document.querySelector(".close-modal");
+    const gridItems = document.querySelectorAll(".grid-item");
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popup-img");
+    const popupTitle = document.getElementById("popup-title");
+    const popupDesc = document.getElementById("popup-desc");
+    const closeBtn = document.querySelector(".close-btn");
 
-    buttons.forEach(button => {
-      button.addEventListener("click", function() {
-        const productId = this.getAttribute("data-product-id");
+    gridItems.forEach(item => {
+      item.addEventListener("click", function() {
+        const imgSrc = this.getAttribute("data-image");
+        const title = this.getAttribute("data-title");
+        const desc = this.getAttribute("data-desc");
 
-        fetch(`/products/${productId}.js`)
-          .then(response => response.json())
-          .then(data => {
-            modalBody.innerHTML = `
-              <h3>${data.title}</h3>
-              <img src="${data.images[0]}" style="width: 100%;">
-              <p>${data.price / 100} ${Shopify.currency.active}</p>
-              <button onclick="addToCart(${data.variants[0].id})">Add to Cart</button>
-            `;
-            modal.style.display = "block";
-          });
+        popupImg.src = imgSrc;
+        popupTitle.innerText = title;
+        popupDesc.innerText = desc;
+
+        popup.style.display = "flex";
       });
     });
 
-    closeModal.addEventListener("click", () => {
-      modal.style.display = "none";
+    closeBtn.addEventListener("click", function() {
+      popup.style.display = "none";
     });
 
-    function addToCart(variantId) {
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quantity: 1, id: variantId })
-      }).then(() => alert("Added to cart!"));
-    }
+    popup.addEventListener("click", function(e) {
+      if (e.target === popup) {
+        popup.style.display = "none";
+      }
+    });
   });
 </script>
