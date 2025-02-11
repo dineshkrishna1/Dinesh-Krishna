@@ -22,9 +22,15 @@
         "button_link": "",
         "banner_image": "shopify://shop_images/Group_1000007949_4251390f-bdea-46d6-a890-1bdb184fb9de.jpg"
       }
+    },
+    "grid": {
+      "type": "grid",
+      "custom_css": [],
+      "settings": {}
     }
   },
   "order": [
-    "banner"
+    "banner",
+    "grid"
   ]
 }
