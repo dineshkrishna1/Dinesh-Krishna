@@ -1,89 +1,71 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const gridContainer = document.getElementById("custom-grid");
+    const gridItems = document.querySelectorAll(".grid-item");
+    const popup = document.querySelector(".grid-popup-overlay");
+    const popupImage = document.querySelector("#grid-popup-image");
+    const popupTitle = document.querySelector("#grid-popup-title");
+    const popupPrice = document.querySelector("#grid-popup-price");
+    const popupVariants = document.querySelector("#grid-popup-variants");
+    const closePopup = document.querySelector(".grid-close-popup");
+    const addToCart = document.querySelector(".grid-add-to-cart");
 
-  // Sample product data (Replace with actual Shopify Liquid data)
-  const products = [
-    {
-      image: "https://cdn.shopify.com/s/files/1/0929/4181/2000/files/young-man-in-bright-fashion_925x_b3b7ebd6-c91f-496a-a516-45403497ea25.jpg?v=1738919285",
-      title: "Product 1",
-      price: "$49.99",
-      colors: ["Red", "Blue"],
-      url: "#"
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Product 2",
-      price: "$59.99",
-      colors: ["Black", "Grey"],
-      url: "#"
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Product 3",
-      price: "$39.99",
-      colors: ["White", "Yellow"],
-      url: "#"
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Product 4",
-      price: "$29.99",
-      colors: ["Green", "Purple"],
-      url: "#"
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Product 5",
-      price: "$89.99",
-      colors: ["Pink", "Brown"],
-      url: "#"
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Product 6",
-      price: "$79.99",
-      colors: ["Navy", "Beige"],
-      url: "#"
-    }
-  ];
+    gridItems.forEach(item => {
+        item.querySelector(".grid-popup-btn").addEventListener("click", function () {
+            let productId = item.dataset.productId;
 
-  // Generate grid items dynamically
-  let gridHTML = '<div class="grid-container">';
-  products.forEach(product => {
-    gridHTML += `
-      <div class="grid-item">
-        <div class="image-container">
-          <img src="${product.image}" alt="${product.title}">
-          <button class="quick-view" onclick="openPopup('${product.title}', '${product.image}', '${product.price}', '${product.colors.join(", ")}')">+</button>
-        </div>
-        <h3>${product.title}</h3>
-        <p>${product.price}</p>
-      </div>
-    `;
-  });
-  gridHTML += "</div>";
+            // Fetch product details using Shopify's AJAX API
+            fetch(`/products/${productId}.json`)
+                .then(response => response.json())
+                .then(data => {
+                    let product = data.product;
+                    popupImage.src = product.images[0].src;
+                    popupTitle.innerText = product.title;
+                    popupPrice.innerText = `$${product.variants[0].price}`;
 
-  gridContainer.innerHTML = gridHTML;
+                    // Populate variants
+                    popupVariants.innerHTML = "";
+                    product.variants.forEach(variant => {
+                        let variantButton = document.createElement("button");
+                        variantButton.innerText = variant.title;
+                        variantButton.dataset.variantId = variant.id;
+                        variantButton.classList.add("grid-variant-option");
+                        popupVariants.appendChild(variantButton);
+                    });
+
+                    popup.style.display = "flex";
+                });
+        });
+    });
+
+    closePopup.addEventListener("click", function () {
+        popup.style.display = "none";
+    });
+
+    popup.addEventListener("click", function (e) {
+        if (e.target === popup) popup.style.display = "none";
+    });
+
+    addToCart.addEventListener("click", function () {
+        let selectedVariant = document.querySelector(".grid-variant-option.selected");
+        if (!selectedVariant) {
+            alert("Please select a variant.");
+            return;
+        }
+
+        let variantId = selectedVariant.dataset.variantId;
+
+        fetch("/cart/add.js", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+        })
+        .then(response => response.json())
+        .then(() => alert("Added to cart!"));
+    });
+
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("grid-variant-option")) {
+            document.querySelectorAll(".grid-variant-option").forEach(btn => btn.classList.remove("selected"));
+            e.target.classList.add("selected");
+        }
+    });
 });
-
-// Popup functionality
-function openPopup(title, image, price, colors) {
-  const popup = document.createElement("div");
-  popup.classList.add("popup-overlay");
-  popup.innerHTML = `
-    <div class="popup-content">
-      <span class="close-popup" onclick="closePopup()">&times;</span>
-      <img src="${image}" alt="${title}">
-      <h2>${title}</h2>
-      <p>${price}</p>
-      <p>Available Colors: ${colors}</p>
-      <button class="add-to-cart">Add to Cart</button>
-    </div>
-  `;
-  document.body.appendChild(popup);
-}
-
-// Close popup
-function closePopup() {
-  document.querySelector(".popup-overlay").remove();
-}
