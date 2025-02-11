@@ -16,22 +16,47 @@
       <h2 id="popup-title"></h2>
       <p id="popup-price"></p>
       <p id="popup-description"></p>
-      <button class="grid-add-to-cart">ADD TO CART</button>
+      <div class="grid-popup-actions">
+        <select id="popup-size">
+          <option value="">Choose your size</option>
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+        </select>
+        <button class="grid-add-to-cart">ADD TO CART →</button>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+  /* Grid Layout */
   .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
+    padding: 20px;
   }
 
   .grid-item {
     position: relative;
+    overflow: hidden;
+    border-radius: 10px;
   }
 
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .grid-item:hover img {
+    transform: scale(1.05);
+  }
+
+  /* + Button */
   .grid-popup-btn {
     position: absolute;
     top: 10px;
@@ -40,11 +65,21 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
   }
 
+  .grid-popup-btn:hover {
+    background: #444;
+  }
+
+  /* Popup Styles */
   .grid-popup-overlay {
     display: none;
     position: fixed;
@@ -55,28 +90,83 @@
     background: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
 
   .grid-popup {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 350px;
     position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
   }
 
   .grid-close-popup {
     position: absolute;
     top: 10px;
-    right: 10px;
-    font-size: 20px;
+    right: 15px;
+    font-size: 24px;
     cursor: pointer;
+  }
+
+  .grid-popup-content img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .grid-popup-content h2 {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+
+  .grid-popup-content p {
+    font-size: 16px;
+    color: #555;
+  }
+
+  /* Popup Actions */
+  .grid-popup-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .grid-add-to-cart {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+
+  .grid-add-to-cart:hover {
+    background: #444;
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const popup = document.querySelector(".grid-popup-overlay");
+    const popupOverlay = document.querySelector(".grid-popup-overlay");
     const closePopup = document.querySelector(".grid-close-popup");
 
     document.querySelectorAll(".grid-popup-btn").forEach(button => {
@@ -91,16 +181,16 @@
           document.getElementById("popup-description").innerText = product.description;
         }
 
-        popup.style.display = "flex";
+        popupOverlay.style.display = "flex";
       });
     });
 
     closePopup.addEventListener("click", function () {
-      popup.style.display = "none";
+      popupOverlay.style.display = "none";
     });
 
-    popup.addEventListener("click", function (e) {
-      if (e.target === popup) popup.style.display = "none";
+    popupOverlay.addEventListener("click", function (e) {
+      if (e.target === popupOverlay) popupOverlay.style.display = "none";
     });
   });
 </script>
