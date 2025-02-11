@@ -51,6 +51,11 @@
     position: relative;
 }
 
+.grid-popup-content img {
+    max-width: 100%;
+    height: auto;
+}
+
 .grid-close-popup {
     position: absolute;
     top: 10px;
@@ -59,4 +64,32 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
+}
+
+.popup-color div {
+    display: flex;
+    gap: 10px;
+}
+
+.popup-color div button {
+    padding: 5px 15px;
+    border: 1px solid black;
+    background: none;
+    cursor: pointer;
+}
+
+.popup-size select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.grid-add-to-cart {
+    background: black;
+    color: white;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
 }
