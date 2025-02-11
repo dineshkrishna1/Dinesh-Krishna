@@ -1,9 +1,9 @@
 <section class="custom-grid">
     <div class="grid-container">
-        {% for product in collections["all"].products %}
+        {% for product in collections["all"].products limit:6 %}
             <div class="grid-item" data-product-id="{{ product.id }}">
                 <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
-                <button class="grid-popup-btn">+</button>
+                <button class="grid-popup-btn" data-product-id="{{ product.id }}">+</button>
             </div>
         {% endfor %}
     </div>
@@ -15,7 +15,6 @@
             <img id="grid-popup-image" src="" alt="">
             <h2 id="grid-popup-title"></h2>
             <p id="grid-popup-price"></p>
-            <div id="grid-popup-variants"></div>
             <button class="grid-add-to-cart">Add to Cart</button>
         </div>
     </div>
