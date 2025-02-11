@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sample product data (Replace with actual Shopify Liquid data)
   const products = [
     {
-      image: "https://via.placeholder.com/300",
+      image: "https://cdn.shopify.com/s/files/1/0929/4181/2000/files/young-man-in-bright-fashion_925x_b3b7ebd6-c91f-496a-a516-45403497ea25.jpg?v=1738919285",
       title: "Product 1",
       price: "$49.99",
       colors: ["Red", "Blue"],
