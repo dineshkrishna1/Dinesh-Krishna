@@ -1,6 +1,10 @@
 .skip-to-content {
-  display: none !important;
+  position: absolute;
+  top: -100px;
+  left: 0;
+  visibility: hidden;
 }
+
 /* General Styles */
 .banner-section {
   width: 100vw; /* Full viewport width */
