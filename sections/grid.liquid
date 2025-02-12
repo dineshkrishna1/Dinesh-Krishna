@@ -208,15 +208,14 @@
 
           const colorContainer = document.getElementById("popup-color");
           colorContainer.innerHTML = "";
-          const uniqueColors = new Set();
+          const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1))).slice(0, 2);
 
-          product.variants.forEach(variant => {
-            if (variant.option1 && !uniqueColors.has(variant.option1)) {
-              uniqueColors.add(variant.option1);
+          uniqueColors.forEach(color => {
+            if (color) {
               const button = document.createElement("button");
               button.classList.add("color-option");
-              button.innerText = variant.option1;
-              button.dataset.color = variant.option1;
+              button.innerText = color;
+              button.dataset.color = color;
               button.addEventListener("click", () => {
                 document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
                 button.classList.add("selected");
@@ -224,6 +223,7 @@
               colorContainer.appendChild(button);
             }
           });
+
           popupOverlay.style.display = "flex";
         }
       });
