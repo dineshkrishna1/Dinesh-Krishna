@@ -206,11 +206,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("popup-price").innerText = product.price + " €";
         document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
+        // Handle Color Options (Fix: Ensure color is correctly extracted)
         const colorContainer = document.getElementById("popup-color");
         colorContainer.innerHTML = "";
-        
-        // Ensure colors are extracted from the correct option
-        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1))).slice(0, 2);
+
+        // Get Unique Colors from Variants
+        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1)));
 
         uniqueColors.forEach(color => {
           if (color) {
@@ -218,11 +219,15 @@ document.addEventListener("DOMContentLoaded", function () {
             button.classList.add("color-option");
             button.innerText = color;
             button.dataset.color = color;
-            button.style.backgroundColor = color.toLowerCase(); // Apply color dynamically
+            button.style.backgroundColor = color.toLowerCase(); // Set button background color
+            button.style.color = color.toLowerCase() === "black" ? "white" : "black"; // Adjust text color
+            button.style.border = "2px solid black"; // Match the style in your image
+
             button.addEventListener("click", () => {
               document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
               button.classList.add("selected");
             });
+
             colorContainer.appendChild(button);
           }
         });
@@ -235,4 +240,5 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
   popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
 });
+
 </script>
