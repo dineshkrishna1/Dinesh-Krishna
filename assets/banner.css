@@ -110,51 +110,75 @@
   border: none;
 }
 @media (max-width: 768px) {
-  /* Ensure full-screen background without gaps */
+  /* Fullscreen Background */
   .banner-container {
     width: 100vw;
     height: 100vh;
     background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-    background-size: cover; /* Ensures full image without cropping */
+    background-size: cover; /* Ensures full image without gaps */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    padding-top: 80px; /* Adjusted to position content properly */
+    padding-top: 100px; /* Adjust to position content properly */
+    position: relative;
   }
 
-  /* Header Adjustments */
+  /* Header (Shop Name + Menu Icon) */
   .custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
     padding: 15px 20px;
-    font-size: 16px;
-  }
-
-  /* Text Section */
-  .text-overlay {
-    max-width: 90%;
-    text-align: center;
-  }
-
-  .text-overlay .title {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+    z-index: 10;
   }
 
+  /* Shop Name */
+  .shop-name {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+
+  /* Text Section - Positioned at the center */
+  .text-overlay {
+    max-width: 85%;
+    text-align: center;
+    margin-top: 100px; /* Adjust for correct positioning */
+  }
+
+  /* Title */
+  .text-overlay .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* Subtitle */
   .text-overlay .subtitle {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 5px;
   }
 
+  /* Description */
   .text-overlay .description {
     font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 20px;
+    line-height: 1.4;
+    margin-bottom: 15px;
   }
 
-  /* "SHOP NOW" Button (Bottom Centered) */
+  /* "SHOP NOW" Button - Fixed at the Bottom */
   .shop-now-button {
     display: block;
     background: black;
@@ -164,9 +188,8 @@
     font-weight: bold;
     text-decoration: none;
     border: none;
-    margin-top: auto; /* Pushes it to the bottom */
     position: absolute;
-    bottom: 30px; /* Ensures it's placed as in the image */
+    bottom: 50px; /* Ensures it stays at the bottom */
     left: 50%;
     transform: translateX(-50%);
   }
