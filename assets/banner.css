@@ -74,26 +74,26 @@
 
 /* Text Section - Positioned in Left Empty Space */
 .text-overlay {
-  max-width: 500px;
+  max-width: 300px;
   color: black;
 }
 
 .text-overlay .title {
   font-size: 50px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .text-overlay .subtitle {
   font-size: 18px;
   line-height: 1.5;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .text-overlay .description {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 /* "SHOP NOW" Button */
