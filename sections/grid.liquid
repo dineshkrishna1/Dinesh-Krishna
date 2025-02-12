@@ -1,4 +1,5 @@
-
+<div class="grid-section">
+  <div class="tisso-vision-text">TISSO VISON IN THE WILD</div>
 <!-- Product Grid -->
 <div class="grid-container">
   {% for product in collections.all.products limit:6 %}
@@ -45,6 +46,23 @@
 
 <!-- CSS Styles -->
 <style>
+    /* Grid Section */
+  .grid-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Tisso Vison Text (Above Grid) */
+  .tisso-vision-text {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: black;
+    letter-spacing: 1px;
+    margin-bottom: 15px; /* Adds spacing between text and grid */
+  }
   /* Grid Layout */
   .grid-container {
     display: grid;
