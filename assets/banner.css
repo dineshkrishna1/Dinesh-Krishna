@@ -60,7 +60,13 @@
   justify-content: flex-start; /* Align text to left side */
   padding: 0 8% 5%; /* Left padding & bottom spacing */
 }
-
+.sustainability-message {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
+  }
 /* Centered Banner Message */
 .banner-message {
   position: absolute;
