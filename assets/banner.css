@@ -61,11 +61,15 @@
   padding: 0 8% 5%; /* Left padding & bottom spacing */
 }
 .sustainability-message {
-    text-align: center;
-    font-size: 16px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
     font-weight: bold;
-    margin-top: 15px;
     color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 /* Centered Banner Message */
 .banner-message {
