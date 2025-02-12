@@ -1,13 +1,11 @@
+<script>
 document.addEventListener("DOMContentLoaded", function () {
-  const button = document.querySelectorAll(".choose-gift-button");
-
-  button.forEach((btn) => {
-    btn.addEventListener("mouseenter", () => {
-      btn.style.transform = "scale(1.1)";
-    });
-
-    btn.addEventListener("mouseleave", () => {
-      btn.style.transform = "scale(1)";
-    });
+  const button = document.querySelector(".choose-gift-button");
+  button.addEventListener("mouseenter", () => {
+    button.style.transform = "scale(1.1)";
+  });
+  button.addEventListener("mouseleave", () => {
+    button.style.transform = "scale(1)";
   });
 });
+</script>
