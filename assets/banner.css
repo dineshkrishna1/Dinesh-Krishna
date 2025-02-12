@@ -1,3 +1,6 @@
+.skip-to-content {
+  display: none !important;
+}
 /* General Styles */
 .banner-section {
   width: 100vw; /* Full viewport width */
