@@ -192,55 +192,53 @@
     const closePopup = document.querySelector(".grid-close-popup");
 
     document.querySelectorAll(".grid-popup-btn").forEach(button => {
-      button.addEventListener("click", function () {
-        const productId = this.dataset.productId;
-        const products = {{ collections.all.products | json }};
-        const product = products.find(p => p.id == productId);
+        button.addEventListener("click", function () {
+            const productId = this.dataset.productId;
+            const products = {{ collections.all.products | json }};
+            const product = products.find(p => p.id == productId);
 
-        if (product) {
-          document.getElementById("popup-image").src = product.featured_image 
-            ? product.featured_image 
-            : "https://via.placeholder.com/375"; // Fallback image
-          document.getElementById("popup-title").innerText = product.title;
-          document.getElementById("popup-price").innerText = product.price + " €";
-          document.getElementById("popup-description").innerText = product.description;
+            if (product) {
+                document.getElementById("popup-image").src = product.featured_image.src;
+                document.getElementById("popup-title").innerText = product.title;
+                document.getElementById("popup-price").innerText = product.price + " €";
 
-          // Populate Color Options as Buttons
-          const colorContainer = document.getElementById("popup-colors");
-          colorContainer.innerHTML = ""; // Clear previous options
+                // ✅ Fix: Remove <p> tags from description
+                document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
-          const colors = [...new Set(product.variants.map(variant => variant.option1))]; // Unique colors
-          colors.forEach(color => {
-            const colorBtn = document.createElement("div");
-            colorBtn.classList.add("color-option");
-            colorBtn.style.backgroundColor = color.toLowerCase(); // Assuming color names match CSS colors
-            colorBtn.dataset.color = color;
-            
-            colorBtn.addEventListener("click", function () {
-              document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-              this.classList.add("selected");
-            });
+                // ✅ Fix: Display color options as buttons
+                const colorContainer = document.getElementById("popup-color");
+                colorContainer.innerHTML = ""; // Clear previous buttons
+                const uniqueColors = new Set();
 
-            colorContainer.appendChild(colorBtn);
-          });
-        }
+                product.variants.forEach(variant => {
+                    if (variant.option1 && !uniqueColors.has(variant.option1)) {
+                        uniqueColors.add(variant.option1);
 
-        popupOverlay.style.display = "flex";
-      });
+                        const button = document.createElement("button");
+                        button.textContent = variant.option1;
+                        button.classList.add("color-option");
+                        button.setAttribute("data-color", variant.option1);
+
+                        button.addEventListener("click", function () {
+                            document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
+                            this.classList.add("selected");
+                        });
+
+                        colorContainer.appendChild(button);
+                    }
+                });
+            }
+
+            popupOverlay.style.display = "flex";
+        });
     });
 
     closePopup.addEventListener("click", function () {
-      popupOverlay.style.display = "none";
+        popupOverlay.style.display = "none";
     });
 
     popupOverlay.addEventListener("click", function (e) {
-      if (e.target === popupOverlay) popupOverlay.style.display = "none";
+        if (e.target === popupOverlay) popupOverlay.style.display = "none";
     });
-
-    // Add to Cart (dummy functionality)
-    document.querySelector(".grid-add-to-cart").addEventListener("click", function () {
-      alert("Product added to cart!");
-      popupOverlay.style.display = "none";
-    });
-  });
+});
 </script>
