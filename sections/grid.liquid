@@ -1,3 +1,4 @@
+<!-- Grid Layout -->
 <div class="grid-container">
   {% for product in collections.all.products limit:6 %}
     <div class="grid-item">
@@ -15,9 +16,9 @@
       <img id="popup-image" src="" alt="">
       <h2 id="popup-title"></h2>
       <p id="popup-price"></p>
-      <p id="popup-description">{{ product.description | strip_html }}</p>
+      <p id="popup-description"></p>
       <div class="grid-popup-actions">
-        <div id="popup-colors" class="color-options"></div>
+        <div id="popup-color" class="color-options"></div> <!-- Color options here -->
         <select id="popup-size">
           <option value="">Choose your size</option>
           <option value="S">Small</option>
@@ -30,6 +31,7 @@
   </div>
 </div>
 
+<!-- Styles -->
 <style>
   /* Grid Layout */
   .grid-container {
@@ -137,18 +139,16 @@
   /* Color Options */
   .color-options {
     display: flex;
-    justify-content: center;
     gap: 8px;
-    margin-bottom: 10px;
+    justify-content: center;
   }
 
   .color-option {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    border: 2px solid #ccc;
     cursor: pointer;
-    border: 2px solid transparent;
-    transition: border 0.3s;
   }
 
   .color-option.selected {
@@ -186,60 +186,62 @@
   }
 </style>
 
+<!-- JavaScript -->
 <script>
-  const productsData = {{ collections.all.products | json }};
   document.addEventListener("DOMContentLoaded", function () {
     const popupOverlay = document.querySelector(".grid-popup-overlay");
     const closePopup = document.querySelector(".grid-close-popup");
 
+    // Store product data in a variable
+    const productsData = {{ collections.all.products | json }};
+
     document.querySelectorAll(".grid-popup-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            const productId = this.dataset.productId;
-            const products = {{ collections.all.products | json }};
-            const product = products.find(p => p.id == productId);
+      button.addEventListener("click", function () {
+        const productId = this.dataset.productId;
+        const product = productsData.find(p => p.id == productId);
 
-            if (product) {
-                document.getElementById("popup-image").src = product.featured_image.src;
-                document.getElementById("popup-title").innerText = product.title;
-                document.getElementById("popup-price").innerText = product.price + " €";
+        if (product) {
+          document.getElementById("popup-image").src = product.featured_image.src;
+          document.getElementById("popup-title").innerText = product.title;
+          document.getElementById("popup-price").innerText = product.price + " €";
 
-                // ✅ Fix: Remove <p> tags from description
-                document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
+          // Remove <p> tags from description
+          document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
-                // ✅ Fix: Display color options as buttons
-                const colorContainer = document.getElementById("popup-color");
-                colorContainer.innerHTML = ""; // Clear previous buttons
-                const uniqueColors = new Set();
+          // Display color options as buttons
+          const colorContainer = document.getElementById("popup-color");
+          colorContainer.innerHTML = ""; // Clear previous buttons
+          const uniqueColors = new Set();
 
-                product.variants.forEach(variant => {
-                    if (variant.option1 && !uniqueColors.has(variant.option1)) {
-                        uniqueColors.add(variant.option1);
+          product.variants.forEach(variant => {
+            if (variant.option1 && !uniqueColors.has(variant.option1)) {
+              uniqueColors.add(variant.option1);
 
-                        const button = document.createElement("button");
-                        button.textContent = variant.option1;
-                        button.classList.add("color-option");
-                        button.setAttribute("data-color", variant.option1);
+              const button = document.createElement("button");
+              button.classList.add("color-option");
+              button.style.backgroundColor = variant.option1.toLowerCase();
+              button.setAttribute("data-color", variant.option1);
 
-                        button.addEventListener("click", function () {
-                            document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-                            this.classList.add("selected");
-                        });
+              button.addEventListener("click", function () {
+                document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
+                this.classList.add("selected");
+              });
 
-                        colorContainer.appendChild(button);
-                    }
-                });
+              colorContainer.appendChild(button);
             }
+          });
 
-            popupOverlay.style.display = "flex";
-        });
+          popupOverlay.style.display = "flex"; // Show popup
+        }
+      });
     });
 
     closePopup.addEventListener("click", function () {
-        popupOverlay.style.display = "none";
+      popupOverlay.style.display = "none";
     });
 
     popupOverlay.addEventListener("click", function (e) {
-        if (e.target === popupOverlay) popupOverlay.style.display = "none";
+      if (e.target === popupOverlay) popupOverlay.style.display = "none";
     });
-});
+  });
 </script>
