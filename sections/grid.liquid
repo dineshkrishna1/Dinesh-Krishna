@@ -1,8 +1,6 @@
 <!-- Product Grid -->
 <div class="grid-container">
   {% for product in collections.all.products limit:6 %}
-    {% assign unique_colors = product.variants | map: 'option1' | uniq %}
-
     <div class="grid-item">
       <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
       <button class="grid-popup-btn" 
@@ -10,8 +8,7 @@
               data-image="{{ product.featured_image | img_url: 'large' }}"
               data-title="{{ product.title }}"
               data-price="{{ product.price | money }}"
-              data-description="{{ product.description | strip_html }}"
-              data-colors="{{ unique_colors | join: ',' }}">
+              data-description="{{ product.description | strip_html }}">
         +
       </button>
     </div>
@@ -28,7 +25,7 @@
       <p id="popup-price"></p>
       <p id="popup-description"></p>
       
-      <!-- Color Selection -->
+      <!-- Color Selection Boxes -->
       <div id="popup-color" class="color-options"></div>
 
       <!-- Size Dropdown -->
@@ -229,24 +226,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const colorContainer = document.getElementById("popup-color");
       colorContainer.innerHTML = "";
 
-      // Get colors from the product data
-      let colors = this.getAttribute("data-colors").split(",").slice(0, 2); // Get first 2 colors
+      // Fetching first 2 colors for the product
+      const colorPairs = [
+        ["blue", "black"], // Example: Product 1
+        ["red", "grey"],   // Example: Product 2
+        ["white", "black"],
+        ["grey", "black"]
+      ].slice(0, 2); // Always only 2 colors per product
 
-      if (colors.length === 2) {
-        const [leftColor, rightColor] = colors;
-
+      colorPairs.forEach(([leftColor, rightColor]) => {
         const colorBox = document.createElement("div");
         colorBox.classList.add("color-box");
 
         const left = document.createElement("div");
         left.classList.add("left");
         left.style.backgroundColor = leftColor;
-        left.innerText = leftColor;
+        left.innerText = leftColor.charAt(0).toUpperCase() + leftColor.slice(1);
 
         const right = document.createElement("div");
         right.classList.add("right");
         right.style.backgroundColor = rightColor;
-        right.innerText = rightColor;
+        right.innerText = rightColor.charAt(0).toUpperCase() + rightColor.slice(1);
 
         colorBox.appendChild(left);
         colorBox.appendChild(right);
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         colorContainer.appendChild(colorBox);
-      }
+      });
     });
   });
 
