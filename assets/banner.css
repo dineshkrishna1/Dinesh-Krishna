@@ -58,7 +58,7 @@
 /* Banner Message - Centered at the Top */
 .banner-message {
   position: absolute;
-  top: -30px; /* Adjusted for better alignment */
+  top: -40px; /* Adjusted for better alignment */
   left: 50%;
   transform: translateX(-50%);
   font-size: 16px;
