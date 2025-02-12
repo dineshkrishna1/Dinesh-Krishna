@@ -1,151 +1,92 @@
-
-/* General Styles */
-.banner-section {
-  width: 100%;
-  font-family: "Helvetica", sans-serif;
-}
-
-/* Header */
-.custom-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  position: relative;
-  z-index: 10;
-}
-
-.menu-icon {
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.shop-name {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.choose-gift-button {
-  background: black;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none;
-  border: none;
-  transition: background 0.3s ease-in-out;
-}
-
-.choose-gift-button:hover {
-  background: #333;
-}
-
-/* Desktop View - Text on Left, Image Full Width */
-.banner-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100vh;
-  padding: 5%;
-}
-
-/* Text Positioning for Desktop */
-.text-overlay {
-  max-width: 40%;
-  color: black;
-  text-align: left;
-}
-
-.text-overlay .title {
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.text-overlay .subtitle {
-  font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
-
-.text-overlay .description {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-/* Image Styling */
-.banner-image-container {
-  width: 60%;
-}
-
-.banner-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* SHOP NOW Button */
-.shop-now-button {
-  display: inline-block;
-  background: black;
-  color: white;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none;
-  border: none;
-}
-
-/* Mobile View */
 @media (max-width: 768px) {
-  /* Adjust header */
-  .custom-header {
+  /* Full Mobile Page Layout */
+  .mobile-banner {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-  }
-
-  /* Stack content vertically */
-  .banner-container {
-    flex-direction: column;
-    text-align: center;
-    height: auto;
-    padding: 20px 5%;
-  }
-
-  .text-overlay {
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .text-overlay .title {
-    font-size: 28px;
-  }
-
-  .text-overlay .subtitle {
-    font-size: 16px;
-  }
-
-  .text-overlay .description {
-    font-size: 14px;
-  }
-
-  /* Image should be full width */
-  .banner-image-container {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  .shop-now-button {
+    background: white;
+    overflow: hidden;
     position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    margin-top: 15px;
+  }
+
+  /* Header (Logo + Menu) */
+  .custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 20px;
+    background: white;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  /* Menu Icon */
+  .menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  /* Shop Name */
+  .shop-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+
+  /* Text Content Section (White Background) */
+  .text-content {
+    width: 100%;
+    text-align: center;
+    padding: 100px 20px 20px; /* Adjust padding for correct positioning */
+    position: relative;
+    background: white;
+  }
+
+  .text-content .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .text-content .subtitle {
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .text-content .description {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  /* Background Image (Full Width, No Gaps) */
+  .banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* "SHOP NOW" Button (Placed Inside Image) */
+  .shop-now-button {
+    display: block;
+    background: black;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    position: absolute;
+    bottom: 80px; /* Matches the screenshot */
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
