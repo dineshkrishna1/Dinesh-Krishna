@@ -138,41 +138,52 @@
   }
 
   /* Rectangular Color Buttons */
-  /* Color Options - Side by Side Rectangles */
-.color-options {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  margin-top: 10px;
-}
+  .color-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
 
-.color-option {
-  width: 70px; /* Adjust width */
-  height: 35px; /* Adjust height */
-  border: 2px solid black;
-  text-align: center;
-  line-height: 35px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  .color-option {
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    background-color: white;
+    font-weight: bold;
+    min-width: 60px;
+    transition: all 0.3s ease;
+  }
 
-/* First Button: Background Filled with Color */
-.color-option.filled {
-  color: white; /* White text */
-}
+  .color-option.selected {
+    border: 2px solid black;
+    background-color: #eee;
+  }
 
-/* Second Button: White Background with Border */
-.color-option.outline {
-  background-color: white;
-  color: black;
-}
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
-/* Selected Effect */
-.color-option.selected {
-  border: 2px solid red; /* Highlight selected */
-}
+  .grid-add-to-cart {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
 
+  .grid-add-to-cart:hover {
+    background: #444;
+  }
 </style>
 
 <!-- JavaScript -->
@@ -181,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupOverlay = document.querySelector(".grid-popup-overlay");
   const closePopup = document.querySelector(".grid-close-popup");
 
-  // Fetch product data from Shopify
+  // Store product data
   const productsData = {{ collections.all.products | json }};
 
   document.querySelectorAll(".grid-popup-btn").forEach(button => {
@@ -195,45 +206,29 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("popup-price").innerText = product.price + " €";
         document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
-        // Handle Color Options (Side-by-Side Rectangles)
+        // Handle Color Options (Fix: Ensure color is correctly extracted)
         const colorContainer = document.getElementById("popup-color");
-        colorContainer.innerHTML = ""; // Clear previous colors
+        colorContainer.innerHTML = "";
 
-        const uniqueColors = new Set();
+        // Get Unique Colors from Variants
+        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1)));
 
-        product.variants.forEach(variant => {
-          let color = variant.option1; // Adjust if colors are in option2
-          if (color && !uniqueColors.has(color)) {
-            uniqueColors.add(color);
+        uniqueColors.forEach(color => {
+          if (color) {
+            const button = document.createElement("button");
+            button.classList.add("color-option");
+            button.innerText = color;
+            button.dataset.color = color;
+            button.style.backgroundColor = color.toLowerCase(); // Set button background color
+            button.style.color = color.toLowerCase() === "black" ? "white" : "black"; // Adjust text color
+            button.style.border = "2px solid black"; // Match the style in your image
 
-            const colorWrapper = document.createElement("div");
-            colorWrapper.style.display = "flex";
-            colorWrapper.style.gap = "5px";
-
-            // Filled Color Box
-            const filledBox = document.createElement("button");
-            filledBox.classList.add("color-option", "filled");
-            filledBox.innerText = color;
-            filledBox.style.backgroundColor = color.toLowerCase();
-            filledBox.style.color = color.toLowerCase() === "black" ? "white" : "black";
-
-            // Outlined Color Box
-            const outlineBox = document.createElement("button");
-            outlineBox.classList.add("color-option", "outline");
-            outlineBox.innerText = color;
-
-            // Selection Effect
-            [filledBox, outlineBox].forEach(box => {
-              box.addEventListener("click", function () {
-                document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-                filledBox.classList.add("selected");
-                outlineBox.classList.add("selected");
-              });
+            button.addEventListener("click", () => {
+              document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
+              button.classList.add("selected");
             });
 
-            colorWrapper.appendChild(filledBox);
-            colorWrapper.appendChild(outlineBox);
-            colorContainer.appendChild(colorWrapper);
+            colorContainer.appendChild(button);
           }
         });
 
