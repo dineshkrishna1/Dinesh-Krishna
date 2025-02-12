@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupOverlay = document.querySelector(".grid-popup-overlay");
   const closePopup = document.querySelector(".grid-close-popup");
 
-  // Store product data
+  // Fetch product data from Shopify
   const productsData = {{ collections.all.products | json }};
 
   document.querySelectorAll(".grid-popup-btn").forEach(button => {
@@ -208,28 +208,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Handle Color Options
         const colorContainer = document.getElementById("popup-color");
-        colorContainer.innerHTML = "";
+        colorContainer.innerHTML = ""; // Clear previous color buttons
 
-        const uniqueColors = new Set();
+        const colorOptions = new Set();
 
         product.variants.forEach(variant => {
-          let color = variant.option1 || variant.option2 || variant.option3; // Pick first non-empty option
-          if (color && !uniqueColors.has(color)) {
-            uniqueColors.add(color);
-            const button = document.createElement("button");
-            button.classList.add("color-option");
-            button.innerText = color;
-            button.dataset.color = color;
-            button.style.backgroundColor = color.toLowerCase();
-            button.style.color = color.toLowerCase() === "black" ? "white" : "black"; // Adjust text color
-            button.style.border = "2px solid black";
+          let color = variant.option1; // Adjust if your colors are in option2 or option3
+          if (color && !colorOptions.has(color)) {
+            colorOptions.add(color);
 
-            button.addEventListener("click", () => {
+            const colorBtn = document.createElement("button");
+            colorBtn.classList.add("color-option");
+            colorBtn.innerText = color;
+            colorBtn.dataset.color = color;
+            colorBtn.style.backgroundColor = color.toLowerCase(); // Apply background color
+            colorBtn.style.color = color.toLowerCase() === "black" ? "white" : "black";
+            colorBtn.style.border = "2px solid black";
+
+            // Handle selection effect
+            colorBtn.addEventListener("click", function () {
               document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-              button.classList.add("selected");
+              this.classList.add("selected");
             });
 
-            colorContainer.appendChild(button);
+            colorContainer.appendChild(colorBtn);
           }
         });
 
@@ -241,5 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
   popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
 });
+
 
 </script>
