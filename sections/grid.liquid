@@ -3,7 +3,14 @@
   {% for product in collections.all.products limit:6 %}
     <div class="grid-item">
       <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
-      <button class="grid-popup-btn" data-product-id="{{ product.id }}">+</button>
+      <button class="grid-popup-btn" 
+              data-product-id="{{ product.id }}"
+              data-image="{{ product.featured_image | img_url: 'large' }}"
+              data-title="{{ product.title }}"
+              data-price="{{ product.price | money }}"
+              data-description="{{ product.description | strip_html }}">
+        +
+      </button>
     </div>
   {% endfor %}
 </div>
@@ -148,11 +155,24 @@
     border: 2px solid black;
     cursor: pointer;
     overflow: hidden;
+    position: relative;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   .color-box .left, .color-box .right {
     width: 50%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 5px;
+    color: white;
+  }
+
+  .color-box .right {
+    justify-content: flex-end;
+    padding-right: 5px;
   }
 
   /* Selected State */
@@ -197,17 +217,22 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       popupOverlay.style.display = "flex";
 
+      document.getElementById("popup-image").src = this.getAttribute("data-image");
+      document.getElementById("popup-title").innerText = this.getAttribute("data-title");
+      document.getElementById("popup-price").innerText = this.getAttribute("data-price");
+      document.getElementById("popup-description").innerText = this.getAttribute("data-description");
+
       // Reset color selection
       const colorContainer = document.getElementById("popup-color");
       colorContainer.innerHTML = "";
 
-      // Color pairs (Replace with actual Shopify product variant colors)
+      // Fetching first 2 colors for the product
       const colorPairs = [
-        ["blue", "black"],
-        ["red", "grey"],
+        ["blue", "black"], // Example: Product 1
+        ["red", "grey"],   // Example: Product 2
         ["white", "black"],
         ["grey", "black"]
-      ];
+      ].slice(0, 2); // Always only 2 colors per product
 
       colorPairs.forEach(([leftColor, rightColor]) => {
         const colorBox = document.createElement("div");
@@ -216,10 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const left = document.createElement("div");
         left.classList.add("left");
         left.style.backgroundColor = leftColor;
+        left.innerText = leftColor.charAt(0).toUpperCase() + leftColor.slice(1);
 
         const right = document.createElement("div");
         right.classList.add("right");
         right.style.backgroundColor = rightColor;
+        right.innerText = rightColor.charAt(0).toUpperCase() + rightColor.slice(1);
 
         colorBox.appendChild(left);
         colorBox.appendChild(right);
