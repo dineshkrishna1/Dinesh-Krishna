@@ -81,19 +81,19 @@
 .text-overlay .title {
   font-size: 40px;
   font-weight: bold;
-  margin-bottom: -30px;
+  margin-bottom: -70px;
 }
 
 .text-overlay .subtitle {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -30px;
+  margin-bottom: -70px;
 }
 
 .text-overlay .description {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -20px;
+  margin-bottom: -50px;
 }
 
 /* "SHOP NOW" Button */
