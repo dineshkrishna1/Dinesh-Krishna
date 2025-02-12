@@ -17,17 +17,20 @@
       <h2 id="popup-title"></h2>
       <p id="popup-price"></p>
       <p id="popup-description"></p>
-      <div class="grid-popup-actions">
-        <div id="popup-color" class="color-options"></div> <!-- Rectangular Color Buttons -->
-        <select id="popup-size">
-          <option value="">Choose your size</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-        </select>
-        <button class="grid-add-to-cart">ADD TO CART →</button>
-      </div>
+      
+      <!-- Color Selection Boxes -->
+      <div id="popup-color" class="color-options"></div>
+
+      <!-- Size Dropdown -->
+      <select id="popup-size" class="size-dropdown">
+        <option value="">Choose your size</option>
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+
+      <button class="grid-add-to-cart">ADD TO CART →</button>
     </div>
   </div>
 </div>
@@ -50,7 +53,6 @@
 
   .grid-item img {
     width: 100%;
-    height: auto;
     display: block;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
@@ -105,12 +107,6 @@
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
   }
 
   .grid-close-popup {
@@ -137,7 +133,7 @@
     color: #555;
   }
 
-  /* Rectangular Color Buttons */
+  /* Color Options (Two-Tone Rectangular Buttons) */
   .color-options {
     display: flex;
     gap: 10px;
@@ -145,29 +141,34 @@
     margin-top: 10px;
   }
 
-  .color-option {
-    padding: 5px 15px;
-    border-radius: 5px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    font-size: 14px;
-    text-align: center;
-    background-color: white;
-    font-weight: bold;
-    min-width: 60px;
-    transition: all 0.3s ease;
-  }
-
-  .color-option.selected {
+  .color-box {
+    display: flex;
+    width: 120px; /* Exact width from Figma */
+    height: 40px; /* Exact height from Figma */
     border: 2px solid black;
-    background-color: #eee;
+    cursor: pointer;
+    overflow: hidden;
   }
 
-  select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  .color-box .left, .color-box .right {
+    width: 50%;
+    height: 100%;
+  }
+
+  /* Selected State */
+  .color-box.selected {
+    border: 3px solid black;
+  }
+
+  /* Size Dropdown */
+  .size-dropdown {
+    width: 120px; /* Match exact width from Figma */
+    height: 40px; /* Match exact height */
+    border: 2px solid black;
+    font-size: 16px;
+    padding: 5px;
+    background: white;
+    cursor: pointer;
   }
 
   .grid-add-to-cart {
@@ -192,53 +193,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupOverlay = document.querySelector(".grid-popup-overlay");
   const closePopup = document.querySelector(".grid-close-popup");
 
-  // Store product data
-  const productsData = {{ collections.all.products | json }};
-
   document.querySelectorAll(".grid-popup-btn").forEach(button => {
     button.addEventListener("click", function () {
-      const productId = this.dataset.productId;
-      const product = productsData.find(p => p.id == productId);
+      popupOverlay.style.display = "flex";
 
-      if (product) {
-        document.getElementById("popup-image").src = product.featured_image || "{{ 'placeholder.jpg' | asset_url }}";
-        document.getElementById("popup-title").innerText = product.title;
-        document.getElementById("popup-price").innerText = product.price + " €";
-        document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
+      // Reset color selection
+      const colorContainer = document.getElementById("popup-color");
+      colorContainer.innerHTML = "";
 
-        // Handle Color Options (Fix: Ensure color is correctly extracted)
-        const colorContainer = document.getElementById("popup-color");
-        colorContainer.innerHTML = "";
+      // Color pairs (Replace with actual Shopify product variant colors)
+      const colorPairs = [
+        ["blue", "black"],
+        ["red", "grey"],
+        ["white", "black"],
+        ["grey", "black"]
+      ];
 
-        // Get Unique Colors from Variants
-        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1)));
+      colorPairs.forEach(([leftColor, rightColor]) => {
+        const colorBox = document.createElement("div");
+        colorBox.classList.add("color-box");
 
-        uniqueColors.forEach(color => {
-          if (color) {
-            const button = document.createElement("button");
-            button.classList.add("color-option");
-            button.innerText = color;
-            button.dataset.color = color;
-            button.style.backgroundColor = color.toLowerCase(); // Set button background color
-            button.style.color = color.toLowerCase() === "black" ? "white" : "black"; // Adjust text color
-            button.style.border = "2px solid black"; // Match the style in your image
+        const left = document.createElement("div");
+        left.classList.add("left");
+        left.style.backgroundColor = leftColor;
 
-            button.addEventListener("click", () => {
-              document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-              button.classList.add("selected");
-            });
+        const right = document.createElement("div");
+        right.classList.add("right");
+        right.style.backgroundColor = rightColor;
 
-            colorContainer.appendChild(button);
-          }
+        colorBox.appendChild(left);
+        colorBox.appendChild(right);
+
+        colorBox.addEventListener("click", function () {
+          document.querySelectorAll(".color-box").forEach(box => box.classList.remove("selected"));
+          this.classList.add("selected");
         });
 
-        popupOverlay.style.display = "flex";
-      }
+        colorContainer.appendChild(colorBox);
+      });
     });
   });
 
   closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
   popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
 });
-
 </script>
