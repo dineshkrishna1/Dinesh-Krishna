@@ -188,48 +188,51 @@
 
 <!-- JavaScript -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const popupOverlay = document.querySelector(".grid-popup-overlay");
-    const closePopup = document.querySelector(".grid-close-popup");
+document.addEventListener("DOMContentLoaded", function () {
+  const popupOverlay = document.querySelector(".grid-popup-overlay");
+  const closePopup = document.querySelector(".grid-close-popup");
 
-    // Store product data
-    const productsData = {{ collections.all.products | json }};
+  // Store product data
+  const productsData = {{ collections.all.products | json }};
 
-    document.querySelectorAll(".grid-popup-btn").forEach(button => {
-      button.addEventListener("click", function () {
-        const productId = this.dataset.productId;
-        const product = productsData.find(p => p.id == productId);
+  document.querySelectorAll(".grid-popup-btn").forEach(button => {
+    button.addEventListener("click", function () {
+      const productId = this.dataset.productId;
+      const product = productsData.find(p => p.id == productId);
 
-        if (product) {
-          document.getElementById("popup-image").src = product.featured_image || "{{ 'placeholder.jpg' | asset_url }}";
-          document.getElementById("popup-title").innerText = product.title;
-          document.getElementById("popup-price").innerText = product.price + " €";
-          document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
+      if (product) {
+        document.getElementById("popup-image").src = product.featured_image || "{{ 'placeholder.jpg' | asset_url }}";
+        document.getElementById("popup-title").innerText = product.title;
+        document.getElementById("popup-price").innerText = product.price + " €";
+        document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
-          const colorContainer = document.getElementById("popup-color");
-          colorContainer.innerHTML = "";
-          const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1))).slice(0, 2);
+        const colorContainer = document.getElementById("popup-color");
+        colorContainer.innerHTML = "";
+        
+        // Ensure colors are extracted from the correct option
+        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1))).slice(0, 2);
 
-          uniqueColors.forEach(color => {
-            if (color) {
-              const button = document.createElement("button");
-              button.classList.add("color-option");
-              button.innerText = color;
-              button.dataset.color = color;
-              button.addEventListener("click", () => {
-                document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-                button.classList.add("selected");
-              });
-              colorContainer.appendChild(button);
-            }
-          });
+        uniqueColors.forEach(color => {
+          if (color) {
+            const button = document.createElement("button");
+            button.classList.add("color-option");
+            button.innerText = color;
+            button.dataset.color = color;
+            button.style.backgroundColor = color.toLowerCase(); // Apply color dynamically
+            button.addEventListener("click", () => {
+              document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
+              button.classList.add("selected");
+            });
+            colorContainer.appendChild(button);
+          }
+        });
 
-          popupOverlay.style.display = "flex";
-        }
-      });
+        popupOverlay.style.display = "flex";
+      }
     });
-
-    closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
-    popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
   });
+
+  closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
+  popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
+});
 </script>
