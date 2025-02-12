@@ -142,16 +142,6 @@
     margin-bottom: 10px;
   }
 
-  .grid-popup-content h2 {
-    font-size: 20px;
-    margin: 10px 0;
-  }
-
-  .grid-popup-content p {
-    font-size: 16px;
-    color: #555;
-  }
-
   /* Color Options */
   .color-options {
     display: flex;
@@ -167,7 +157,6 @@
     border: 2px solid black;
     cursor: pointer;
     overflow: hidden;
-    position: relative;
     font-size: 14px;
     font-weight: bold;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -236,19 +225,39 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       popupOverlay.classList.add("active");
       popupOverlay.style.display = "flex";
+
+      document.getElementById("popup-image").src = this.getAttribute("data-image");
+      document.getElementById("popup-title").innerText = this.getAttribute("data-title");
+      document.getElementById("popup-price").innerText = this.getAttribute("data-price");
+      document.getElementById("popup-description").innerText = this.getAttribute("data-description");
+
+      const colorContainer = document.getElementById("popup-color");
+      colorContainer.innerHTML = "";
+
+      const colorPairs = [
+        ["blue", "black"], 
+        ["red", "grey"],   
+        ["white", "black"],
+        ["grey", "black"]
+      ].slice(0, 2); 
+
+      colorPairs.forEach(([leftColor, rightColor]) => {
+        const colorBox = document.createElement("div");
+        colorBox.classList.add("color-box");
+
+        colorBox.innerHTML = `<div class="left" style="background:${leftColor}">${leftColor}</div>
+                              <div class="right" style="background:${rightColor}">${rightColor}</div>`;
+
+        colorBox.addEventListener("click", function () {
+          document.querySelectorAll(".color-box").forEach(box => box.classList.remove("selected"));
+          this.classList.add("selected");
+        });
+
+        colorContainer.appendChild(colorBox);
+      });
     });
   });
 
-  closePopup.addEventListener("click", () => {
-    popupOverlay.classList.remove("active");
-    setTimeout(() => { popupOverlay.style.display = "none"; }, 300);
-  });
-
-  popupOverlay.addEventListener("click", e => {
-    if (e.target === popupOverlay) {
-      popupOverlay.classList.remove("active");
-      setTimeout(() => { popupOverlay.style.display = "none"; }, 300);
-    }
-  });
+  closePopup.addEventListener("click", () => popupOverlay.classList.remove("active"));
 });
 </script>
