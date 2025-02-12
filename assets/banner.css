@@ -13,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 15px 40px; /* Adjusted padding for spacing */
+  padding: 15px 40px;
   font-size: 18px;
   font-weight: bold;
   position: absolute;
@@ -52,11 +52,13 @@
   width: 100vw;
   height: 100vh;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover; /* Ensures the full background without gaps */
+  background-size: contain; /* Ensures full image without cropping */
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align text to the left */
-  padding-left: 8%; /* Ensures proper text alignment */
+  justify-content: flex-start;
+  padding-left: 8%; /* Align text to left empty space */
 }
 
 /* Centered Banner Message */
@@ -72,12 +74,12 @@
 
 /* Text Section - Positioned in Left Empty Space */
 .text-overlay {
-  max-width: 500px; /* Matches the width in Figma */
+  max-width: 500px;
   color: black;
 }
 
 .text-overlay .title {
-  font-size: 50px; /* Adjusted to match Figma */
+  font-size: 50px;
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -94,8 +96,8 @@
   margin-bottom: 25px;
 }
 
-/* Call to Action Button */
-.text-overlay .choose-gift-button {
+/* "SHOP NOW" Button */
+.shop-now-button {
   display: inline-block;
   background: black;
   color: white;
