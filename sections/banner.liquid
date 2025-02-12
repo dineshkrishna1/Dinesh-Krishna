@@ -70,21 +70,21 @@
     </div>
   </header>
 
-  <!-- Desktop & Mobile Banner -->
+  <!-- Banner Content -->
   <div class="banner-container">
-    <!-- Text Section -->
+    <!-- Left Side: Text Section -->
     <div class="text-overlay">
       <h1 class="title">{{ section.settings.main_title }}</h1>
       <p class="subtitle">{{ section.settings.subtitle }}</p>
       <p class="description">{{ section.settings.description }}</p>
-    </div>
-
-    <!-- Banner Image -->
-    <div class="banner-image-container">
-      <img src="{{ section.settings.banner_image | image_url }}" alt="Banner" class="banner-image">
       <a href="{{ section.settings.button_link }}" class="shop-now-button">
         {{ section.settings.button_text }}
       </a>
+    </div>
+
+    <!-- Right Side: Banner Image (For Mobile, Aligned Right) -->
+    <div class="banner-image-container">
+      <img src="{{ section.settings.banner_image | image_url }}" alt="Banner" class="banner-image">
     </div>
   </div>
 </div>
