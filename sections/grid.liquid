@@ -150,45 +150,39 @@
   }
 
   /* Color Options with Animation */
-  .color-options {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-  }
+  /* Color Options with Animation */
+.color-options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
 
-  .color-box {
-    display: flex;
-    width: 120px;
-    height: 40px;
-    border: 2px solid black;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    font-size: 14px;
-    font-weight: bold;
-    transition: transform 0.3s ease-in-out, border 0.3s;
-  }
+.color-box {
+  display: flex;
+  width: 80px;
+  height: 40px;
+  border: 2px solid black;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-transform: capitalize;
+  transition: transform 0.3s ease-in-out, border 0.3s;
+}
 
-  .color-box:hover {
-    transform: scale(1.1);
-    border-color: #444;
-  }
+.color-box:hover {
+  transform: scale(1.1);
+  border-color: #444;
+}
 
-  .color-box.selected {
-    transform: scale(1.15);
-    border: 3px solid #000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-
-  .color-box .left, .color-box .right {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-  }
+.color-box.selected {
+  transform: scale(1.15);
+  border: 3px solid #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
   /* Size Dropdown Animation */
   .size-dropdown {
@@ -242,13 +236,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const colorContainer = document.getElementById("popup-color");
       colorContainer.innerHTML = "";
 
-      let colors = this.getAttribute("data-colors").split(",").slice(0, 2);
+      let colors = this.getAttribute("data-colors").split(",");
       colors.forEach(color => {
         const colorBox = document.createElement("div");
         colorBox.classList.add("color-box");
         colorBox.style.backgroundColor = color;
         colorBox.innerText = color;
-        
+
         colorBox.addEventListener("click", function () {
           document.querySelectorAll(".color-box").forEach(box => box.classList.remove("selected"));
           this.classList.add("selected");
@@ -261,4 +255,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
 });
+
 </script>
