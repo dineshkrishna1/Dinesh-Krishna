@@ -258,6 +258,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  closePopup.addEventListener("click", () => popupOverlay.classList.remove("active"));
+  // ✅ Close the popup when clicking the close button
+  closePopup.addEventListener("click", () => {
+    popupOverlay.classList.remove("active");
+    setTimeout(() => { popupOverlay.style.display = "none"; }, 300); // Hide after animation
+  });
+
+  // ✅ Close the popup when clicking outside the popup
+  popupOverlay.addEventListener("click", (e) => {
+    if (e.target === popupOverlay) {
+      popupOverlay.classList.remove("active");
+      setTimeout(() => { popupOverlay.style.display = "none"; }, 300);
+    }
+  });
 });
+
 </script>
