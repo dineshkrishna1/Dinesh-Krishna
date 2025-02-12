@@ -2,6 +2,7 @@
 .banner-section {
   width: 100%;
   font-family: "Helvetica", sans-serif;
+  position: relative;
 }
 
 /* Header */
@@ -10,7 +11,7 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 15px 20px;
+  padding: 20px 40px;
   font-size: 16px;
   font-weight: bold;
 }
@@ -27,33 +28,33 @@
 .choose-gift-button {
   background: #FFD700;
   color: black;
-  padding: 8px 15px;
-  font-size: 14px;
+  padding: 12px 20px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
-  border-radius: 0;
-  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .choose-gift-button:hover {
-  background: #E6C200;
+  transform: scale(1.05);
 }
 
 /* Banner */
 .banner-container {
   width: 100%;
-  height: 100vh; /* Full viewport height */
+  height: 90vh;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover; /* Ensures the image covers the full area */
+  background-size: cover;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 8%;
   position: relative;
 }
 
-/* Banner Message (Find the ideal gift for your loved ones.) */
+/* Banner Message */
 .banner-message {
   position: absolute;
   top: 10px;
@@ -64,39 +65,47 @@
   color: black;
 }
 
-/* Main Title and Text */
+/* Text Content */
 .text-overlay {
-  max-width: 600px;
-  margin-left: 50px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .title {
-  font-size: 40px;
+  font-size: 48px;
   font-weight: bold;
   color: black;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  font-size: 16px;
+  font-size: 18px;
   color: black;
   margin-bottom: 10px;
 }
 
 .description {
-  font-size: 14px;
+  font-size: 16px;
   color: black;
   margin-bottom: 20px;
 }
 
-/* Button in Banner */
+/* Button */
 .text-overlay .choose-gift-button {
   display: inline-block;
   background: #FFD700;
   color: black;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 14px 24px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.text-overlay .choose-gift-button:hover {
+  transform: scale(1.05);
 }
