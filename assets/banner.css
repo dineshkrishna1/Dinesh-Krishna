@@ -46,7 +46,7 @@
   width: 100%;
   height: 100vh; /* Full viewport height */
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover;
+  background-size: 100% auto; /* Ensures full width, height adjusts automatically */
   display: flex;
   align-items: center;
   justify-content: flex-start;
