@@ -202,7 +202,7 @@
 
         if (product) {
           // **Fix: Ensure product image appears**
-          const popupImage = document.getElementById("popup-image");
+          document.getElementById("popup-image").src = product.featured_image ? product.featured_image.src : "{{ 'placeholder.jpg' | asset_url }}";
           popupImage.src = product.featured_image ? product.featured_image.src : "{{ 'placeholder.jpg' | asset_url }}";
           popupImage.alt = product.title;
 
