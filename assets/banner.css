@@ -1,9 +1,10 @@
 /* General Styles */
 .banner-section {
-  width: 100%;
-  height: 100vh; /* Full screen height */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   font-family: "Helvetica", sans-serif;
   position: relative;
+  overflow: hidden;
 }
 
 /* Header */
@@ -12,14 +13,18 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 15px 20px;
-  font-size: 16px;
+  padding: 15px 40px; /* Adjusted padding for spacing */
+  font-size: 18px;
   font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 
 .shop-name {
   color: black;
-  font-size: 18px;
 }
 
 .choose-gift-header {
@@ -29,8 +34,8 @@
 .choose-gift-button {
   background: #FFD700;
   color: black;
-  padding: 8px 15px;
-  font-size: 14px;
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
@@ -44,53 +49,58 @@
 
 /* Full-Screen Background Image */
 .banner-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover; /* Ensures full coverage without gaps */
+  background-size: cover; /* Ensures the full background without gaps */
   display: flex;
   align-items: center;
-  padding-left: 10%; /* Positions text correctly in the left space */
+  justify-content: flex-start; /* Align text to the left */
+  padding-left: 8%; /* Ensures proper text alignment */
 }
 
-/* Banner Message (Top Centered) */
+/* Centered Banner Message */
 .banner-message {
   position: absolute;
-  top: 10px;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   color: black;
 }
 
-/* Correct Text Alignment */
+/* Text Section - Positioned in Left Empty Space */
 .text-overlay {
-  max-width: 400px; /* Keeps text compact */
+  max-width: 500px; /* Matches the width in Figma */
   color: black;
 }
 
-/* Title */
 .text-overlay .title {
-  font-size: 40px;
+  font-size: 50px; /* Adjusted to match Figma */
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-/* Subtitle & Description */
-.text-overlay .subtitle,
+.text-overlay .subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
 .text-overlay .description {
   font-size: 16px;
-  margin-bottom: 10px;
+  line-height: 1.5;
+  margin-bottom: 25px;
 }
 
-/* Button in Banner */
+/* Call to Action Button */
 .text-overlay .choose-gift-button {
   display: inline-block;
   background: black;
   color: white;
-  padding: 12px 24px;
-  font-size: 14px;
+  padding: 14px 28px;
+  font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
