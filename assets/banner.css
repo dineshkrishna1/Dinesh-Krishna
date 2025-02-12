@@ -87,13 +87,13 @@
 .text-overlay .subtitle {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -70px;
+  margin-bottom: -100px;
 }
 
 .text-overlay .description {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -50px;
+  margin-bottom: -110px;
 }
 
 /* "SHOP NOW" Button */
