@@ -17,108 +17,43 @@
       <h2 id="popup-title"></h2>
       <p id="popup-price"></p>
       <p id="popup-description"></p>
-      
-      <!-- Color Options -->
-      <div class="color-options" id="popup-color"></div>
-      
-      <!-- Size Dropdown -->
-      <select id="popup-size" class="size-dropdown">
-        <option value="">Choose your size</option>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-      </select>
-      
-      <button class="grid-add-to-cart">ADD TO CART →</button>
+      <div class="grid-popup-actions">
+        <div id="popup-color" class="color-options"></div> <!-- Rectangular Color Buttons -->
+        <select id="popup-size"></select> <!-- Dynamic Size Dropdown -->
+        <button class="grid-add-to-cart">ADD TO CART →</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- CSS Styles -->
 <style>
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    padding: 20px;
-  }
-  
-  .grid-item {
-    position: relative;
-  }
-
-  .grid-popup-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .grid-popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-  }
-
-  .grid-popup {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 375px;
-    text-align: center;
-  }
-
-  .grid-close-popup {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-  }
-
-  /* Color Buttons */
   .color-options {
     display: flex;
     gap: 10px;
     justify-content: center;
     margin-top: 10px;
   }
-
   .color-option {
-    padding: 5px 20px;
-    border: 2px solid black;
-    background-color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid transparent;
     cursor: pointer;
+    font-size: 14px;
+    background-color: white;
     font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.3s;
+    min-width: 60px;
+    transition: all 0.3s ease;
   }
-
   .color-option.selected {
-    background-color: black;
-    color: white;
+    border: 2px solid black;
+    background-color: #eee;
   }
-
-  /* Size Dropdown */
-  .size-dropdown {
+  select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
-    margin-top: 10px;
+    border-radius: 5px;
   }
 </style>
 
@@ -135,15 +70,18 @@
         const product = productsData.find(p => p.id == productId);
 
         if (product) {
-          document.getElementById("popup-image").src = product.featured_image;
+          document.getElementById("popup-image").src = product.featured_image || "{{ 'placeholder.jpg' | asset_url }}";
           document.getElementById("popup-title").innerText = product.title;
           document.getElementById("popup-price").innerText = product.price + " €";
           document.getElementById("popup-description").innerHTML = product.description.replace(/</?p>/g, "");
 
-          // Colors
           const colorContainer = document.getElementById("popup-color");
           colorContainer.innerHTML = "";
           const uniqueColors = new Set();
+
+          const sizeDropdown = document.getElementById("popup-size");
+          sizeDropdown.innerHTML = "<option value=''>Choose your size</option>";
+          const uniqueSizes = new Set();
 
           product.variants.forEach(variant => {
             if (variant.option1 && !uniqueColors.has(variant.option1)) {
@@ -151,14 +89,19 @@
               const button = document.createElement("button");
               button.classList.add("color-option");
               button.innerText = variant.option1;
-              button.setAttribute("data-color", variant.option1);
-
-              button.addEventListener("click", function () {
+              button.dataset.color = variant.option1;
+              button.addEventListener("click", () => {
                 document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
-                this.classList.add("selected");
+                button.classList.add("selected");
               });
-
               colorContainer.appendChild(button);
+            }
+            if (variant.option2 && !uniqueSizes.has(variant.option2)) {
+              uniqueSizes.add(variant.option2);
+              let option = document.createElement("option");
+              option.value = variant.option2;
+              option.innerText = variant.option2;
+              sizeDropdown.appendChild(option);
             }
           });
 
@@ -167,12 +110,7 @@
       });
     });
 
-    closePopup.addEventListener("click", function () {
-      popupOverlay.style.display = "none";
-    });
-
-    popupOverlay.addEventListener("click", function (e) {
-      if (e.target === popupOverlay) popupOverlay.style.display = "none";
-    });
+    closePopup.addEventListener("click", () => popupOverlay.style.display = "none");
+    popupOverlay.addEventListener("click", e => { if (e.target === popupOverlay) popupOverlay.style.display = "none"; });
   });
 </script>
