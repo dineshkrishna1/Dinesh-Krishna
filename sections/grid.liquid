@@ -206,22 +206,23 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("popup-price").innerText = product.price + " €";
         document.getElementById("popup-description").innerHTML = product.description.replace(/<\/?p>/g, "");
 
-        // Handle Color Options (Fix: Ensure color is correctly extracted)
+        // Handle Color Options
         const colorContainer = document.getElementById("popup-color");
         colorContainer.innerHTML = "";
 
-        // Get Unique Colors from Variants
-        const uniqueColors = Array.from(new Set(product.variants.map(variant => variant.option1)));
+        const uniqueColors = new Set();
 
-        uniqueColors.forEach(color => {
-          if (color) {
+        product.variants.forEach(variant => {
+          let color = variant.option1 || variant.option2 || variant.option3; // Pick first non-empty option
+          if (color && !uniqueColors.has(color)) {
+            uniqueColors.add(color);
             const button = document.createElement("button");
             button.classList.add("color-option");
             button.innerText = color;
             button.dataset.color = color;
-            button.style.backgroundColor = color.toLowerCase(); // Set button background color
+            button.style.backgroundColor = color.toLowerCase();
             button.style.color = color.toLowerCase() === "black" ? "white" : "black"; // Adjust text color
-            button.style.border = "2px solid black"; // Match the style in your image
+            button.style.border = "2px solid black";
 
             button.addEventListener("click", () => {
               document.querySelectorAll(".color-option").forEach(btn => btn.classList.remove("selected"));
