@@ -231,6 +231,88 @@
   .grid-add-to-cart:hover {
     background: #444;
   }
+  @media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .grid-item img {
+    height: 120px; /* Maintain consistency */
+  }
+
+  .grid-popup {
+    width: 95vw;
+    max-width: 350px;
+  }
+
+  .grid-popup-content {
+    padding: 10px;
+  }
+
+  .grid-popup-content h2 {
+    font-size: 18px;
+  }
+
+  .grid-popup-content p {
+    font-size: 14px;
+  }
+
+  /* Make Buttons More Mobile-Friendly */
+  .grid-popup-btn, .grid-add-to-cart {
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  /* Adjust Color Selection Boxes */
+  .color-options {
+    flex-wrap: wrap;
+  }
+
+  .color-box {
+    width: 100px;
+    height: 35px;
+    font-size: 12px;
+  }
+}
+
+/* 📱 Smaller Mobile Screens */
+@media screen and (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for very small screens */
+  }
+
+  .grid-popup {
+    width: 100vw;
+    max-width: 300px;
+  }
+
+  .grid-popup-content h2 {
+    font-size: 16px;
+  }
+
+  .grid-popup-content p {
+    font-size: 12px;
+  }
+
+  .grid-popup-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .size-dropdown {
+    font-size: 14px;
+    height: 35px;
+  }
+
+  .grid-add-to-cart {
+    height: 38px;
+    font-size: 14px;
+  }
+}
 </style>
 
 <!-- JavaScript -->
