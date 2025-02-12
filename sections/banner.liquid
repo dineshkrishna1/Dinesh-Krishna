@@ -36,7 +36,7 @@
       "type": "text",
       "id": "button_text",
       "label": "Button Text",
-      "default": "CHOOSE GIFT →"
+      "default": "SHOP NOW →"
     },
     {
       "type": "url",
@@ -62,21 +62,21 @@
   <!-- Header -->
   <header class="custom-header">
     <div class="shop-name">{{ section.settings.shop_name }}</div>
+    <div class="banner-message">{{ section.settings.banner_message }}</div>
     <div class="choose-gift-header">
       <a href="{{ section.settings.button_link }}" class="choose-gift-button">
-        {{ section.settings.button_text }}
+        CHOOSE GIFT →
       </a>
     </div>
   </header>
 
   <!-- Banner Section -->
   <div class="banner-container" style="background-image: url('{{ section.settings.banner_image | image_url }}');">
-    <div class="banner-message">{{ section.settings.banner_message }}</div>
     <div class="text-overlay">
       <h1 class="title">{{ section.settings.main_title }}</h1>
       <p class="subtitle">{{ section.settings.subtitle }}</p>
       <p class="description">{{ section.settings.description }}</p>
-      <a href="{{ section.settings.button_link }}" class="choose-gift-button">
+      <a href="{{ section.settings.button_link }}" class="shop-now-button">
         {{ section.settings.button_text }}
       </a>
     </div>
