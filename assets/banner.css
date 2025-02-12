@@ -1,7 +1,10 @@
 /* General Styles */
 .banner-section {
-  width: 100%;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   font-family: "Helvetica", sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Header */
@@ -11,9 +14,12 @@
   align-items: center;
   background: white;
   padding: 15px 40px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
 }
 
@@ -21,38 +27,59 @@
   color: black;
 }
 
+.choose-gift-header {
+  text-align: right;
+}
+
 .choose-gift-button {
-  background: black;
-  color: white;
-  padding: 10px 20px;
+  background: #FFD700;
+  color: black;
+  padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
+  cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
 .choose-gift-button:hover {
-  background: #333;
+  background: #E6C200;
 }
 
-/* Desktop View (Default) */
+/* Full-Screen Background Image */
 .banner-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  padding: 5%;
+  background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
+  background-size: contain; /* Ensures full image without cropping */
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end; /* Moves text to bottom */
+  justify-content: flex-start; /* Align text to left side */
+  padding: 0 8% 5%; /* Left padding & bottom spacing */
 }
 
-/* Text Positioning */
+/* Centered Banner Message */
+.banner-message {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: normal;
+  color: black;
+}
+
+/* Text Section - Positioned in Bottom-Left */
 .text-overlay {
-  max-width: 40%;
+  max-width: 350px;
   color: black;
   text-align: left;
 }
 
+/* Adjusted Spacing */
 .text-overlay .title {
   font-size: 40px;
   font-weight: bold;
@@ -60,9 +87,9 @@
 }
 
 .text-overlay .subtitle {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .text-overlay .description {
@@ -71,76 +98,14 @@
   margin-bottom: 20px;
 }
 
-/* Image Styling */
-.banner-image-container {
-  width: 50%;
-  position: relative;
-}
-
-.banner-image {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* SHOP NOW Button */
-.shop-now-button {
+/* "SHOP NOW" Button (Bottom Left) */
+.text-overlay .shop-now-button {
   display: inline-block;
   background: black;
   color: white;
-  padding: 12px 24px;
+  padding: 14px 28px;
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
-}
-
-/* Mobile View (Image Right-Aligned) */
-@media (max-width: 768px) {
-  /* Adjust Header */
-  .custom-header {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-  }
-
-  /* Stack Content in Mobile */
-  .banner-container {
-    display: flex;
-    flex-direction: column-reverse; /* Image at bottom */
-    text-align: left; /* Align text to left */
-    height: auto;
-    padding: 20px 5%;
-  }
-
-  /* Text Stays on Top */
-  .text-overlay {
-    max-width: 100%;
-    text-align: left;
-  }
-
-  .text-overlay .title {
-    font-size: 28px;
-  }
-
-  .text-overlay .subtitle {
-    font-size: 16px;
-  }
-
-  .text-overlay .description {
-    font-size: 14px;
-  }
-
-  /* Image is Right-Aligned */
-  .banner-image-container {
-    width: 100%;
-    text-align: right; /* Move image to the right */
-    margin-top: 20px;
-  }
-
-  .banner-image {
-    max-width: 90%; /* Keep image responsive */
-    height: auto;
-    display: inline-block;
-  }
 }
