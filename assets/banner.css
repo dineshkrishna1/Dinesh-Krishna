@@ -2,7 +2,6 @@
 .banner-section {
   width: 100%;
   font-family: "Helvetica", sans-serif;
-  position: relative;
 }
 
 /* Header */
@@ -11,103 +10,93 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 20px 40px;
+  padding: 15px 40px;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
+  position: relative;
 }
 
 .shop-name {
+  flex: 1;
   color: black;
   font-size: 18px;
+  text-align: left;
+}
+
+.banner-message {
+  flex: 2;
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  color: black;
 }
 
 .choose-gift-header {
+  flex: 1;
   text-align: right;
 }
 
 .choose-gift-button {
   background: #FFD700;
   color: black;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 8px 15px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
-  border-radius: 5px;
+  border: none;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: background 0.3s ease-in-out;
 }
 
 .choose-gift-button:hover {
-  transform: scale(1.05);
+  background: #E6C200;
 }
 
 /* Banner */
 .banner-container {
   width: 100%;
-  height: 90vh;
+  height: 80vh; /* Adjusted height */
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
   background-size: cover;
   display: flex;
-  align-items: flex-end; /* Move content lower */
+  align-items: flex-end;
   justify-content: flex-start;
-  padding-left: 8%;
-  padding-bottom: 8%;
   position: relative;
+  padding: 50px;
 }
 
-/* Banner Message - Centered at the Top */
-.banner-message {
-  position: absolute;
-  top: -50px; /* Adjusted for better alignment */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
-}
-
-/* Text Content */
 .text-overlay {
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  max-width: 600px;
+  margin-bottom: 50px;
 }
 
 .title {
-  font-size: 48px;
+  font-size: 50px;
   font-weight: bold;
   color: black;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .subtitle {
   font-size: 18px;
   color: black;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .description {
   font-size: 16px;
   color: black;
-  margin-bottom: 50px;/* Increased spacing to push it down */
-  margin-right: 25px;
+  margin-bottom: 30px;
 }
 
-/* Button */
-.text-overlay .choose-gift-button {
+.shop-now-button {
   display: inline-block;
-  background: #FFD700;
-  color: black;
-  padding: 14px 24px;
-  font-size: 16px;
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
   border: none;
-  border-radius: 5px;
-  transition: transform 0.2s ease-in-out;
-}
-
-.text-overlay .choose-gift-button:hover {
-  transform: scale(1.05);
 }
