@@ -15,7 +15,7 @@
       <img id="popup-image" src="" alt="">
       <h2 id="popup-title"></h2>
       <p id="popup-price"></p>
-      <p id="popup-description"></p>
+      <p id="popup-description">{{ product.description | strip_html }}</p>
       <div class="grid-popup-actions">
         <div id="popup-colors" class="color-options"></div>
         <select id="popup-size">
