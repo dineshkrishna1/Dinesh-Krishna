@@ -1,10 +1,6 @@
-/* General Styles */
 .banner-section {
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100%;
   font-family: "Helvetica", sans-serif;
-  position: relative;
-  overflow: hidden;
 }
 
 /* Header */
@@ -13,18 +9,14 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 15px 40px;
-  font-size: 18px;
+  padding: 15px 20px;
+  font-size: 16px;
   font-weight: bold;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
 }
 
 .shop-name {
   color: black;
+  font-size: 18px;
 }
 
 .choose-gift-header {
@@ -34,10 +26,11 @@
 .choose-gift-button {
   background: #FFD700;
   color: black;
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 8px 15px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
+  border-radius: 0;
   border: none;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
@@ -47,62 +40,61 @@
   background: #E6C200;
 }
 
-/* Full-Screen Background Image */
+/* Banner */
 .banner-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: contain; /* Ensures full image without cropping */
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size: cover; /* Ensures the image covers the full area */
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 8%; /* Align text to left empty space */
+  justify-content: flex-start; /* Align content to the left */
+  position: relative;
+  padding-left: 80px; /* Ensuring text is on the left */
 }
 
-/* Centered Banner Message */
+/* Banner Message (Find the ideal gift for your loved ones.) */
 .banner-message {
   position: absolute;
-  top: 12%;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 16px;
-  font-weight: normal;
+  font-weight: bold;
   color: black;
 }
 
-/* Text Section - Positioned in Left Empty Space */
+/* Main Title and Text */
 .text-overlay {
   max-width: 500px;
+  text-align: left;
   color: black;
 }
 
-.text-overlay .title {
-  font-size: 50px;
+.title {
+  font-size: 42px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.text-overlay .subtitle {
+.subtitle {
   font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.text-overlay .description {
+.description {
   font-size: 16px;
-  line-height: 1.5;
-  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-top: 10px; /* Slightly lower placement */
 }
 
-/* "SHOP NOW" Button */
-.shop-now-button {
+/* Button in Banner */
+.text-overlay .choose-gift-button {
   display: inline-block;
-  background: black;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
+  background: #FFD700;
+  color: black;
+  padding: 12px 24px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
   border: none;
