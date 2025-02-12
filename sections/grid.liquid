@@ -187,6 +187,7 @@
 </style>
 
 <script>
+  const productsData = {{ collections.all.products | json }};
   document.addEventListener("DOMContentLoaded", function () {
     const popupOverlay = document.querySelector(".grid-popup-overlay");
     const closePopup = document.querySelector(".grid-close-popup");
