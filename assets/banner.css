@@ -1,10 +1,8 @@
+
 /* General Styles */
 .banner-section {
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100%;
   font-family: "Helvetica", sans-serif;
-  position: relative;
-  overflow: hidden;
 }
 
 /* Header */
@@ -13,73 +11,55 @@
   justify-content: space-between;
   align-items: center;
   background: white;
-  padding: 15px 40px;
-  font-size: 18px;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: bold;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 10;
 }
 
-.shop-name {
-  color: black;
+.menu-icon {
+  font-size: 20px;
+  cursor: pointer;
 }
 
-.choose-gift-header {
-  text-align: right;
+.shop-name {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .choose-gift-button {
-  background: #FFD700;
-  color: black;
-  padding: 12px 24px;
+  background: black;
+  color: white;
+  padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
-  cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
 .choose-gift-button:hover {
-  background: #E6C200;
+  background: #333;
 }
 
-/* Full-Screen Background Image */
+/* Desktop View - Text on Left, Image Full Width */
 .banner-container {
-  width: 100vw;
-  height: 100vh;
-  background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: contain; /* Ensures full image without cropping */
-  background-position: center;
-  background-repeat: no-repeat;
   display: flex;
-  align-items: flex-end; /* Moves text to bottom */
-  justify-content: flex-start; /* Align text to left side */
-  padding: 0 8% 5%; /* Left padding & bottom spacing */
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100vh;
+  padding: 5%;
 }
 
-/* Centered Banner Message */
-.banner-message {
-  position: absolute;
-  top: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: normal;
-  color: black;
-}
-
-/* Text Section - Positioned in Bottom-Left */
+/* Text Positioning for Desktop */
 .text-overlay {
-  max-width: 350px;
+  max-width: 40%;
   color: black;
   text-align: left;
 }
 
-/* Adjusted Spacing */
 .text-overlay .title {
   font-size: 40px;
   font-weight: bold;
@@ -87,9 +67,9 @@
 }
 
 .text-overlay .subtitle {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .text-overlay .description {
@@ -98,108 +78,74 @@
   margin-bottom: 20px;
 }
 
-/* "SHOP NOW" Button (Bottom Left) */
-.text-overlay .shop-now-button {
+/* Image Styling */
+.banner-image-container {
+  width: 60%;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* SHOP NOW Button */
+.shop-now-button {
   display: inline-block;
   background: black;
   color: white;
-  padding: 14px 28px;
+  padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
   text-decoration: none;
   border: none;
 }
+
+/* Mobile View */
 @media (max-width: 768px) {
-  /* Full Page Container */
-  .mobile-banner {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
+  /* Adjust header */
+  .custom-header {
     flex-direction: column;
     align-items: center;
-    background: white;
-    overflow: hidden;
-    position: relative;
+    padding: 10px;
   }
 
-  /* Header (Menu + Shop Name) */
-  .custom-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 15px 20px;
-    background: white;
-    font-size: 18px;
-    font-weight: bold;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-  }
-
-  /* Menu Icon */
-  .menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-  }
-
-  /* Shop Name */
-  .shop-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0 auto;
-  }
-
-  /* Text Content Section (White Background) */
-  .text-content {
-    width: 100%;
+  /* Stack content vertically */
+  .banner-container {
+    flex-direction: column;
     text-align: center;
-    padding: 80px 20px 10px; /* Adjust padding based on screenshot */
-    position: relative;
-    background: white;
-  }
-
-  .text-content .title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-
-  .text-content .subtitle {
-    font-size: 16px;
-    line-height: 1.4;
-    margin-bottom: 6px;
-  }
-
-  .text-content .description {
-    font-size: 14px;
-    line-height: 1.4;
-    margin-bottom: 6px;
-  }
-
-  /* Background Image (Full Width, No Gaps) */
-  .banner-image {
-    width: 100%;
     height: auto;
-    background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-    background-size: cover; /* Ensures full image */
-    flex-grow: 1;
+    padding: 20px 5%;
   }
 
-  /* "SHOP NOW" Button (Positioned in Image) */
-  .shop-now-button {
-    display: block;
-    background: black;
-    color: white;
-    padding: 14px 28px;
+  .text-overlay {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .text-overlay .title {
+    font-size: 28px;
+  }
+
+  .text-overlay .subtitle {
     font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-    border: none;
-    position: absolute;
-    bottom: 80px; /* Matches the screenshot */
-    left: 50%;
-    transform: translateX(-50%);
+  }
+
+  .text-overlay .description {
+    font-size: 14px;
+  }
+
+  /* Image should be full width */
+  .banner-image-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .shop-now-button {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 15px;
   }
 }
