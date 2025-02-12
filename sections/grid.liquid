@@ -17,6 +17,9 @@
       <p id="popup-price"></p>
       <p id="popup-description"></p>
       <div class="grid-popup-actions">
+        <select id="popup-color">
+          <option value="">Choose your color</option>
+        </select>
         <select id="popup-size">
           <option value="">Choose your size</option>
           <option value="S">Small</option>
@@ -179,6 +182,18 @@
           document.getElementById("popup-title").innerText = product.title;
           document.getElementById("popup-price").innerText = product.price + " €";
           document.getElementById("popup-description").innerText = product.description;
+
+          // Populate Color Options
+          const colorDropdown = document.getElementById("popup-color");
+          colorDropdown.innerHTML = '<option value="">Choose your color</option>';
+          product.variants.forEach(variant => {
+            if (variant.option1) {
+              const option = document.createElement("option");
+              option.value = variant.option1;
+              option.textContent = variant.option1;
+              colorDropdown.appendChild(option);
+            }
+          });
         }
 
         popupOverlay.style.display = "flex";
