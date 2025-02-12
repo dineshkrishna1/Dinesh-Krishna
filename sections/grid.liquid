@@ -201,7 +201,11 @@
         const product = productsData.find(p => p.id == productId);
 
         if (product) {
-          document.getElementById("popup-image").src = product.featured_image.src;
+          // **Fix: Ensure product image appears**
+          const popupImage = document.getElementById("popup-image");
+          popupImage.src = product.featured_image ? product.featured_image.src : "{{ 'placeholder.jpg' | asset_url }}";
+          popupImage.alt = product.title;
+
           document.getElementById("popup-title").innerText = product.title;
           document.getElementById("popup-price").innerText = product.price + " €";
 
