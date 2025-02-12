@@ -110,25 +110,35 @@
   border: none;
 }
 @media (max-width: 768px) {
+  /* Ensure full-screen background without gaps */
+  .banner-container {
+    width: 100vw;
+    height: 100vh;
+    background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
+    background-size: cover; /* Ensures full image without cropping */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px; /* Adjusted to position content properly */
+  }
+
+  /* Header Adjustments */
   .custom-header {
     padding: 15px 20px;
     font-size: 16px;
   }
 
-  .banner-container {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    padding-top: 100px;
-  }
-
+  /* Text Section */
   .text-overlay {
     max-width: 90%;
+    text-align: center;
   }
 
   .text-overlay .title {
-    font-size: 28px;
+    font-size: 24px;
+    font-weight: bold;
     margin-bottom: 10px;
   }
 
@@ -138,9 +148,26 @@
     margin-bottom: 10px;
   }
 
-  .shop-now-button {
-    padding: 12px 24px;
+  .text-overlay .description {
     font-size: 14px;
-    margin-top: 20px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  /* "SHOP NOW" Button (Bottom Centered) */
+  .shop-now-button {
+    display: block;
+    background: black;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    margin-top: auto; /* Pushes it to the bottom */
+    position: absolute;
+    bottom: 30px; /* Ensures it's placed as in the image */
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
