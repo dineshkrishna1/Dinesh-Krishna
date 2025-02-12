@@ -1,4 +1,6 @@
-
+a[href="#MainContent"] {
+  display: none !important;
+}
 
 /* General Styles */
 .banner-section {
