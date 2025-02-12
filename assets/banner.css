@@ -110,81 +110,79 @@
   border: none;
 }
 @media (max-width: 768px) {
-  /* Fullscreen Background */
-  .banner-container {
+  /* Full Page Container */
+  .mobile-banner {
     width: 100vw;
     height: 100vh;
-    background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-    background-size: cover; /* Ensures full image without gaps */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    text-align: center;
-    padding-top: 200px; /* Ensures space for the text above */
+    background: white;
+    overflow: hidden;
     position: relative;
   }
 
-  /* Header (Shop Name + Menu Icon) */
+  /* Header (Shop Name + Menu) */
   .custom-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 15px 20px;
+    background: white;
+    font-size: 18px;
+    font-weight: bold;
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    background: white;
-    padding: 15px 20px;
-    font-size: 18px;
-    font-weight: bold;
     z-index: 10;
   }
 
   /* Shop Name */
   .shop-name {
-    color: black;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0 auto;
   }
 
-  /* Text Section - Positioned Above Image */
-  .text-section {
+  /* Text Content (Title + Subtitle + Description) */
+  .text-content {
     width: 100%;
     text-align: center;
-    padding: 40px 20px;
-    position: absolute;
-    top: 80px; /* Adjust this value for exact positioning */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    background: white; /* Ensure text stays readable */
+    padding: 60px 20px 20px; /* Adjust top padding to match Figma */
+    position: relative;
+    background: white;
   }
 
-  /* Title */
-  .text-section .title {
-    font-size: 28px;
+  .text-content .title {
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 
-  /* Subtitle */
-  .text-section .subtitle {
+  .text-content .subtitle {
     font-size: 16px;
     line-height: 1.4;
     margin-bottom: 5px;
   }
 
-  /* Description */
-  .text-section .description {
+  .text-content .description {
     font-size: 14px;
     line-height: 1.4;
     margin-bottom: 15px;
   }
 
-  /* "SHOP NOW" Button - Fixed at the Bottom */
+  /* Background Image (Should Not Crop) */
+  .banner-image {
+    width: 100%;
+    height: 100%;
+    background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
+    background-size: contain; /* Ensures full image without cropping */
+    background-position: center bottom;
+    flex-grow: 1;
+  }
+
+  /* SHOP NOW Button */
   .shop-now-button {
     display: block;
     background: black;
@@ -195,7 +193,7 @@
     text-decoration: none;
     border: none;
     position: absolute;
-    bottom: 50px; /* Ensures it stays at the bottom */
+    bottom: 40px; /* Adjust for exact placement */
     left: 50%;
     transform: translateX(-50%);
   }
