@@ -121,7 +121,7 @@
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    padding-top: 100px; /* Adjust to position content properly */
+    padding-top: 200px; /* Ensures space for the text above */
     position: relative;
   }
 
@@ -150,29 +150,35 @@
     margin: 0 auto;
   }
 
-  /* Text Section - Positioned at the center */
-  .text-overlay {
-    max-width: 85%;
+  /* Text Section - Positioned Above Image */
+  .text-section {
+    width: 100%;
     text-align: center;
-    margin-top: 100px; /* Adjust for correct positioning */
+    padding: 40px 20px;
+    position: absolute;
+    top: 80px; /* Adjust this value for exact positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    background: white; /* Ensure text stays readable */
   }
 
   /* Title */
-  .text-overlay .title {
+  .text-section .title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 5px;
   }
 
   /* Subtitle */
-  .text-overlay .subtitle {
+  .text-section .subtitle {
     font-size: 16px;
     line-height: 1.4;
     margin-bottom: 5px;
   }
 
   /* Description */
-  .text-overlay .description {
+  .text-section .description {
     font-size: 14px;
     line-height: 1.4;
     margin-bottom: 15px;
