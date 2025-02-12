@@ -58,29 +58,31 @@
 }
 {% endschema %}
 
+<!-- Responsive Banner Section -->
 <div class="banner-section">
   <!-- Header -->
   <header class="custom-header">
+    <div class="menu-icon">☰</div>
     <div class="shop-name">{{ section.settings.shop_name }}</div>
-    <div class="banner-message">{{ section.settings.banner_message }}</div>
     <div class="choose-gift-header">
       <a href="{{ section.settings.button_link }}" class="choose-gift-button">
-        CHOOSE GIFT →
+        SHOP NOW →
       </a>
     </div>
   </header>
 
-  <!-- Banner Section -->
-  <div class="banner-container" style="background-image: url('{{ section.settings.banner_image | image_url }}');">
+  <!-- Desktop View: Text on Left, Image Full-Screen -->
+  <div class="banner-container">
     <div class="text-overlay">
       <h1 class="title">{{ section.settings.main_title }}</h1>
       <p class="subtitle">{{ section.settings.subtitle }}</p>
       <p class="description">{{ section.settings.description }}</p>
       <a href="{{ section.settings.button_link }}" class="shop-now-button">
-  SHOP NOW
-</a>
-
+        SHOP NOW
       </a>
+    </div>
+    <div class="banner-image-container">
+      <img src="{{ section.settings.banner_image | image_url }}" alt="Banner" class="banner-image">
     </div>
   </div>
 </div>
