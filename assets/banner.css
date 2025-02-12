@@ -1,7 +1,9 @@
 /* General Styles */
 .banner-section {
   width: 100%;
+  height: 100vh; /* Full screen height */
   font-family: "Helvetica", sans-serif;
+  position: relative;
 }
 
 /* Header */
@@ -40,20 +42,18 @@
   background: #E6C200;
 }
 
-/* Full-Width & Full-Height Background Image */
+/* Full-Screen Background Image */
 .banner-container {
   width: 100%;
-  height: 100vh; /* Full viewport height */
+  height: 100%;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover; /* Ensures the image covers the full section */
-  background-position: center;
+  background-size: cover; /* Ensures full coverage without gaps */
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Aligns text to the left */
-  padding: 0 5%; /* Adds spacing from the left */
+  padding-left: 10%; /* Positions text correctly in the left space */
 }
 
-/* Banner Message */
+/* Banner Message (Top Centered) */
 .banner-message {
   position: absolute;
   top: 10px;
@@ -64,17 +64,15 @@
   color: black;
 }
 
-/* Aligning Text to the Left */
+/* Correct Text Alignment */
 .text-overlay {
-  max-width: 500px; /* Ensures compact text block */
+  max-width: 400px; /* Keeps text compact */
   color: black;
-  background: rgba(255, 255, 255, 0.85); /* Light background for readability */
-  padding: 20px;
 }
 
 /* Title */
 .text-overlay .title {
-  font-size: 36px;
+  font-size: 40px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -89,9 +87,9 @@
 /* Button in Banner */
 .text-overlay .choose-gift-button {
   display: inline-block;
-  background: #FFD700;
-  color: black;
-  padding: 10px 20px;
+  background: black;
+  color: white;
+  padding: 12px 24px;
   font-size: 14px;
   font-weight: bold;
   text-decoration: none;
