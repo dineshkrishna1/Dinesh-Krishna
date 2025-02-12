@@ -1,59 +1,224 @@
-document.addEventListener("DOMContentLoaded", function () {
+<div class="grid-container">
+  {% for product in collections.all.products limit:6 %}
+    <div class="grid-item">
+      <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
+      <button class="grid-popup-btn" data-product-id="{{ product.id }}">+</button>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Popup -->
+<div class="grid-popup-overlay">
+  <div class="grid-popup">
+    <span class="grid-close-popup">&times;</span>
+    <div class="grid-popup-content">
+      <img id="popup-image" src="" alt="">
+      <h2 id="popup-title"></h2>
+      <p id="popup-price"></p>
+      <p id="popup-description"></p>
+      <div class="grid-popup-actions">
+        <select id="popup-color">
+          <option value="">Choose your color</option>
+        </select>
+        <select id="popup-size">
+          <option value="">Choose your size</option>
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+        </select>
+        <button class="grid-add-to-cart">ADD TO CART →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Grid Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .grid-item:hover img {
+    transform: scale(1.05);
+  }
+
+  /* + Button */
+  .grid-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+  }
+
+  .grid-popup-btn:hover {
+    background: #444;
+  }
+
+  /* Popup Styles */
+  .grid-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .grid-popup {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 375px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .grid-close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .grid-popup-content img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .grid-popup-content h2 {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+
+  .grid-popup-content p {
+    font-size: 16px;
+    color: #555;
+  }
+
+  /* Popup Actions */
+  .grid-popup-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .grid-add-to-cart {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+
+  .grid-add-to-cart:hover {
+    background: #444;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
     const popupOverlay = document.querySelector(".grid-popup-overlay");
+    const popup = document.querySelector(".grid-popup");
     const closePopup = document.querySelector(".grid-close-popup");
-    const popupImage = document.getElementById("popup-image");
-    const popupTitle = document.getElementById("popup-title");
-    const popupPrice = document.getElementById("popup-price");
-    const popupDescription = document.getElementById("popup-description");
-    const colorDropdown = document.getElementById("popup-color");
-    const sizeDropdown = document.getElementById("popup-size");
-    const addToCartButton = document.querySelector(".grid-add-to-cart");
-    
+
+    // Fetch all product buttons
     document.querySelectorAll(".grid-popup-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            const productId = this.dataset.productId;
-            const products = JSON.parse(document.getElementById("product-data").textContent);
-            const product = products.find(p => p.id == productId);
+      button.addEventListener("click", function () {
+        const productId = this.dataset.productId;
 
-            if (product) {
-                popupImage.src = product.featured_image.src;
-                popupTitle.innerText = product.title;
-                popupPrice.innerText = product.price + " €";
-                popupDescription.innerText = product.description;
-                
-                // Populate Color Options
-                colorDropdown.innerHTML = '<option value="">Choose your color</option>';
-                const colors = new Set();
-                product.variants.forEach(variant => {
-                    if (variant.option1 && !colors.has(variant.option1)) {
-                        colors.add(variant.option1);
-                        const option = document.createElement("option");
-                        option.value = variant.option1;
-                        option.textContent = variant.option1;
-                        colorDropdown.appendChild(option);
-                    }
-                });
+        // Find the product data from Shopify
+        const products = {{ collections.all.products | json }};
+        const product = products.find(p => p.id == productId);
+
+        if (product) {
+          document.getElementById("popup-image").src = product.featured_image.src;
+          document.getElementById("popup-title").innerText = product.title;
+          document.getElementById("popup-price").innerText = product.price + " €";
+          document.getElementById("popup-description").innerText = product.description;
+
+          // Populate Color Options
+          const colorDropdown = document.getElementById("popup-color");
+          colorDropdown.innerHTML = '<option value="">Choose your color</option>';
+          product.variants.forEach(variant => {
+            if (variant.option1) {
+              const option = document.createElement("option");
+              option.value = variant.option1;
+              option.textContent = variant.option1;
+              colorDropdown.appendChild(option);
             }
-            
-            popupOverlay.style.display = "flex";
-        });
-    });
-
-    closePopup.addEventListener("click", function () {
-        popupOverlay.style.display = "none";
-    });
-
-    popupOverlay.addEventListener("click", function (e) {
-        if (e.target === popupOverlay) popupOverlay.style.display = "none";
-    });
-
-    addToCartButton.addEventListener("click", function () {
-        const selectedColor = colorDropdown.value;
-        const selectedSize = sizeDropdown.value;
-        if (!selectedColor || !selectedSize) {
-            alert("Please select a color and size.");
-            return;
+          });
         }
-        alert(`Added to cart: ${popupTitle.innerText} - Color: ${selectedColor}, Size: ${selectedSize}`);
+
+        popupOverlay.style.display = "flex";
+      });
     });
-});
+
+    // Close popup
+    closePopup.addEventListener("click", function () {
+      popupOverlay.style.display = "none";
+    });
+
+    // Close when clicking outside the popup
+    popupOverlay.addEventListener("click", function (e) {
+      if (e.target === popupOverlay) popupOverlay.style.display = "none";
+    });
+
+    // Add to Cart (dummy functionality)
+    document.querySelector(".grid-add-to-cart").addEventListener("click", function () {
+      alert("Product added to cart!");
+      popupOverlay.style.display = "none";
+    });
+  });
+</script>
