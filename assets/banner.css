@@ -1,7 +1,7 @@
 /* General Styles */
 .banner-section {
-  width: 100vw;
-  height: 100vh;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   font-family: "Helvetica", sans-serif;
   position: relative;
   overflow: hidden;
@@ -52,12 +52,13 @@
   width: 100vw;
   height: 100vh;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: cover; /* Ensures full image without cropping */
+  background-size: contain; /* Ensures full image without cropping */
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 8%; /* Align text to left empty space */
+  align-items: flex-end; /* Moves text to bottom */
+  justify-content: flex-start; /* Align text to left side */
+  padding: 0 8% 5%; /* Left padding & bottom spacing */
 }
 
 /* Centered Banner Message */
@@ -71,32 +72,34 @@
   color: black;
 }
 
-/* Text Section - Positioned in Left Empty Space */
+/* Text Section - Positioned in Bottom-Left */
 .text-overlay {
   max-width: 350px;
   color: black;
+  text-align: left;
 }
 
+/* Adjusted Spacing */
 .text-overlay .title {
   font-size: 40px;
   font-weight: bold;
-  margin-bottom: -70px;
+  margin-bottom: 10px;
 }
 
 .text-overlay .subtitle {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -100px;
+  margin-bottom: 10px;
 }
 
 .text-overlay .description {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: -110px;
+  margin-bottom: 20px;
 }
 
-/* "SHOP NOW" Button */
-.shop-now-button {
+/* "SHOP NOW" Button (Bottom Left) */
+.text-overlay .shop-now-button {
   display: inline-block;
   background: black;
   color: white;
@@ -105,41 +108,4 @@
   font-weight: bold;
   text-decoration: none;
   border: none;
-}
-
-/* ========== MOBILE VIEW (Responsive) ========== */
-@media (max-width: 768px) {
-  .custom-header {
-    padding: 15px 20px;
-    font-size: 16px;
-  }
-
-  .banner-container {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    padding-top: 100px;
-  }
-
-  .text-overlay {
-    max-width: 90%;
-  }
-
-  .text-overlay .title {
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-
-  .text-overlay .subtitle {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-
-  .shop-now-button {
-    padding: 12px 24px;
-    font-size: 14px;
-    margin-top: 20px;
-  }
 }
