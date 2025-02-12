@@ -2,7 +2,15 @@
   {% for product in collections.all.products limit:6 %}
     <div class="grid-item">
       <img src="{{ product.featured_image | img_url: 'large' }}" alt="{{ product.title }}">
-      <button class="grid-popup-btn" data-product-id="{{ product.id }}">+</button>
+      <button class="grid-popup-btn" 
+              data-product-id="{{ product.id }}"
+              data-product-image="{{ product.featured_image | img_url: 'large' }}"
+              data-product-title="{{ product.title }}"
+              data-product-price="{{ product.price | money }}"
+              data-product-description="{{ product.description }}"
+              data-product-variants="{{ product.variants | json }}">
+        +
+      </button>
     </div>
   {% endfor %}
 </div>
@@ -17,9 +25,7 @@
       <p id="popup-price"></p>
       <p id="popup-description"></p>
       <div class="grid-popup-actions">
-        <select id="popup-color">
-          <option value="">Choose your color</option>
-        </select>
+        <div id="popup-color-options"></div>
         <select id="popup-size">
           <option value="">Choose your size</option>
           <option value="S">Small</option>
@@ -136,6 +142,27 @@
     color: #555;
   }
 
+  /* Color Swatches */
+  #popup-color-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .color-swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border 0.2s;
+  }
+
+  .color-swatch.selected {
+    border: 2px solid black;
+  }
+
   /* Popup Actions */
   .grid-popup-actions {
     display: flex;
@@ -174,27 +201,39 @@
 
     document.querySelectorAll(".grid-popup-btn").forEach(button => {
       button.addEventListener("click", function () {
-        const productId = this.dataset.productId;
-        const product = {{ collections.all.products | json }}.find(p => p.id == productId);
+        const productImage = this.dataset.productImage;
+        const productTitle = this.dataset.productTitle;
+        const productPrice = this.dataset.productPrice;
+        const productDescription = this.dataset.productDescription;
+        const productVariants = JSON.parse(this.dataset.productVariants);
 
-        if (product) {
-          document.getElementById("popup-image").src = product.featured_image.src;
-          document.getElementById("popup-title").innerText = product.title;
-          document.getElementById("popup-price").innerText = product.price + " €";
-          document.getElementById("popup-description").innerText = product.description;
+        document.getElementById("popup-image").src = productImage;
+        document.getElementById("popup-title").innerText = productTitle;
+        document.getElementById("popup-price").innerText = productPrice;
+        document.getElementById("popup-description").innerText = productDescription;
 
-          // Populate Color Options
-          const colorDropdown = document.getElementById("popup-color");
-          colorDropdown.innerHTML = '<option value="">Choose your color</option>';
-          product.variants.forEach(variant => {
-            if (variant.option1) {
-              const option = document.createElement("option");
-              option.value = variant.option1;
-              option.textContent = variant.option1;
-              colorDropdown.appendChild(option);
-            }
+        // Populate Color Swatches
+        const colorContainer = document.getElementById("popup-color-options");
+        colorContainer.innerHTML = "";
+
+        let colors = new Set();
+        productVariants.forEach(variant => {
+          if (variant.option1) {
+            colors.add(variant.option1);
+          }
+        });
+
+        colors.forEach(color => {
+          const swatch = document.createElement("div");
+          swatch.classList.add("color-swatch");
+          swatch.style.background = color;
+          swatch.dataset.color = color;
+          swatch.addEventListener("click", function () {
+            document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("selected"));
+            swatch.classList.add("selected");
           });
-        }
+          colorContainer.appendChild(swatch);
+        });
 
         popupOverlay.style.display = "flex";
       });
