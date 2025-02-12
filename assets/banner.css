@@ -62,14 +62,19 @@
 }
   
   .sustainability-message {
-    font-size: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
     font-weight: bold;
     color: #333;
     text-transform: uppercase;
-    margin-top: 100px;
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.8);
     letter-spacing: 1px;
-    display: block;
-    text-align: center;
   }
 
 /* Centered Banner Message */
