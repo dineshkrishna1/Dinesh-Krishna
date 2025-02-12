@@ -109,3 +109,38 @@
   text-decoration: none;
   border: none;
 }
+@media (max-width: 768px) {
+  .custom-header {
+    padding: 15px 20px;
+    font-size: 16px;
+  }
+
+  .banner-container {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 100px;
+  }
+
+  .text-overlay {
+    max-width: 90%;
+  }
+
+  .text-overlay .title {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .text-overlay .subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .shop-now-button {
+    padding: 12px 24px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
