@@ -56,13 +56,13 @@ a[href="#MainContent"] {
   width: 100vw;
   height: 100vh;
   background: url('{{ section.settings.banner_image | image_url }}') no-repeat center center;
-  background-size: contain; /* Ensures full image without cropping */
+  background-size: contain; 
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
-  align-items: flex-end; /* Moves text to bottom */
-  justify-content: flex-start; /* Align text to left side */
-  padding: 0 8% 5%; /* Left padding & bottom spacing */
+  align-items: flex-end; 
+  justify-content: flex-start; 
+  padding: 0 8% 5%; 
 }
   
   .sustainability-message {
