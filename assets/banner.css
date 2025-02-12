@@ -36,7 +36,7 @@
   background: #333;
 }
 
-/* Desktop View */
+/* Desktop View (Default) */
 .banner-container {
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@
 
 /* Image Styling */
 .banner-image-container {
-  width: 60%;
+  width: 50%;
   position: relative;
 }
 
@@ -85,10 +85,7 @@
 
 /* SHOP NOW Button */
 .shop-now-button {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
+  display: inline-block;
   background: black;
   color: white;
   padding: 12px 24px;
@@ -98,7 +95,7 @@
   border: none;
 }
 
-/* Mobile View */
+/* Mobile View (Image Right-Aligned) */
 @media (max-width: 768px) {
   /* Adjust Header */
   .custom-header {
@@ -107,17 +104,19 @@
     padding: 10px;
   }
 
-  /* Stack Content Vertically */
+  /* Stack Content in Mobile */
   .banner-container {
-    flex-direction: column;
-    text-align: center;
+    display: flex;
+    flex-direction: column-reverse; /* Image at bottom */
+    text-align: left; /* Align text to left */
     height: auto;
     padding: 20px 5%;
   }
 
+  /* Text Stays on Top */
   .text-overlay {
     max-width: 100%;
-    text-align: center;
+    text-align: left;
   }
 
   .text-overlay .title {
@@ -132,19 +131,16 @@
     font-size: 14px;
   }
 
-  /* Image Should Be Full Width */
+  /* Image is Right-Aligned */
   .banner-image-container {
     width: 100%;
+    text-align: right; /* Move image to the right */
     margin-top: 20px;
   }
 
-  /* SHOP NOW Button (Overlay on Image) */
-  .shop-now-button {
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    padding: 10px 20px;
+  .banner-image {
+    max-width: 90%; /* Keep image responsive */
+    height: auto;
+    display: inline-block;
   }
 }
