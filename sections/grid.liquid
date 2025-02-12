@@ -8,7 +8,9 @@
               data-image="{{ product.featured_image | img_url: 'large' }}"
               data-title="{{ product.title }}"
               data-price="{{ product.price | money }}"
-              data-description="{{ product.description | strip_html }}">
+              data-description="{{ product.description | strip_html }}"
+              data-colors="{{ product.variants | map: 'option1' | uniq | join: ',' }}"
+              data-sizes="{{ product.variants | map: 'option2' | uniq | join: ',' }}">
         +
       </button>
     </div>
@@ -25,16 +27,12 @@
       <p id="popup-price"></p>
       <p id="popup-description"></p>
       
-      <!-- Color Selection Boxes -->
+      <!-- Color Selection -->
       <div id="popup-color" class="color-options"></div>
 
       <!-- Size Dropdown -->
       <select id="popup-size" class="size-dropdown">
         <option value="">Choose your size</option>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
       </select>
 
       <button class="grid-add-to-cart">ADD TO CART →</button>
@@ -140,7 +138,7 @@
     color: #555;
   }
 
-  /* Color Options (Two-Tone Rectangular Buttons) */
+  /* Color Options (Two-Tone Boxes) */
   .color-options {
     display: flex;
     gap: 10px;
@@ -182,8 +180,8 @@
 
   /* Size Dropdown */
   .size-dropdown {
-    width: 120px; /* Match exact width from Figma */
-    height: 40px; /* Match exact height */
+    width: 120px;
+    height: 40px;
     border: 2px solid black;
     font-size: 16px;
     padding: 5px;
@@ -222,31 +220,26 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("popup-price").innerText = this.getAttribute("data-price");
       document.getElementById("popup-description").innerText = this.getAttribute("data-description");
 
-      // Reset color selection
+      // Load Colors
       const colorContainer = document.getElementById("popup-color");
       colorContainer.innerHTML = "";
+      let colors = this.getAttribute("data-colors").split(",").slice(0, 2); // First 2 colors
 
-      // Fetching first 2 colors for the product
-      const colorPairs = [
-        ["blue", "black"], // Example: Product 1
-        ["red", "grey"],   // Example: Product 2
-        ["white", "black"],
-        ["grey", "black"]
-      ].slice(0, 2); // Always only 2 colors per product
+      if (colors.length === 2) {
+        const [leftColor, rightColor] = colors;
 
-      colorPairs.forEach(([leftColor, rightColor]) => {
         const colorBox = document.createElement("div");
         colorBox.classList.add("color-box");
 
         const left = document.createElement("div");
         left.classList.add("left");
         left.style.backgroundColor = leftColor;
-        left.innerText = leftColor.charAt(0).toUpperCase() + leftColor.slice(1);
+        left.innerText = leftColor;
 
         const right = document.createElement("div");
         right.classList.add("right");
         right.style.backgroundColor = rightColor;
-        right.innerText = rightColor.charAt(0).toUpperCase() + rightColor.slice(1);
+        right.innerText = rightColor;
 
         colorBox.appendChild(left);
         colorBox.appendChild(right);
@@ -257,6 +250,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         colorContainer.appendChild(colorBox);
+      }
+
+      // Load Sizes
+      const sizeDropdown = document.getElementById("popup-size");
+      sizeDropdown.innerHTML = `<option value="">Choose your size</option>`;
+      this.getAttribute("data-sizes").split(",").forEach(size => {
+        sizeDropdown.innerHTML += `<option value="${size}">${size}</option>`;
       });
     });
   });
